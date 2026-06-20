@@ -4,28 +4,44 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="theme-color" content="#7F77DD">
-<title>Rufus — dein Begleiter</title>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#5B9BD5">
+<title>Otto — dein Otter</title>
+
+<!-- PWA Manifest inline -->
+<link rel="manifest" href="data:application/json,{
+  &quot;name&quot;:&quot;Otto&quot;,
+  &quot;short_name&quot;:&quot;Otto&quot;,
+  &quot;start_url&quot;:&quot;.&quot;,
+  &quot;display&quot;:&quot;standalone&quot;,
+  &quot;background_color&quot;:&quot;%23EAF4FB&quot;,
+  &quot;theme_color&quot;:&quot;%235B9BD5&quot;,
+  &quot;icons&quot;:[{&quot;src&quot;:&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%235B9BD5'/%3E%3Ctext y='.9em' font-size='80' x='10'%3E🦦%3C/text%3E%3C/svg%3E&quot;,&quot;sizes&quot;:&quot;any&quot;,&quot;type&quot;:&quot;image/svg+xml&quot;}]
+}">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Nunito+Sans:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Nunito+Sans:wght@400;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --purple:#7F77DD; --purple-d:#534AB7; --purple-xl:#EEEDFE;
-  --amber:#EF9F27;  --amber-d:#BA7517;  --amber-xl:#FAEEDA;
-  --teal:#1D9E75;   --teal-l:#5DCAA5;   --teal-xl:#E1F5EE;
-  --coral:#D85A30;  --coral-xl:#FAECE7;
-  --bg:#F7F6FF; --card:#FFFFFF;
-  --text:#1a1830; --text2:#6b6680; --text3:#a09cb8;
-  --border:rgba(127,119,221,0.15);
+:root{
+  --blue:#5B9BD5; --blue-d:#2E6FA3; --blue-xl:#EAF4FB;
+  --teal:#1D9E75; --teal-l:#5DCAA5; --teal-xl:#E1F5EE;
+  --amber:#EF9F27; --amber-d:#BA7517; --amber-xl:#FAEEDA;
+  --coral:#D85A30; --coral-l:#F0997B; --coral-xl:#FAECE7;
+  --red:#C0392B; --red-xl:#FDECEC;
+  --purple:#7F77DD; --purple-xl:#EEEDFE;
+  --bg:#F0F7FF; --card:#FFFFFF;
+  --text:#1a2a3a; --text2:#5a7080; --text3:#9ab0c0;
+  --border:rgba(91,155,213,0.18);
   --r:16px; --r-sm:10px;
   --font:'Nunito',sans-serif; --font2:'Nunito Sans',sans-serif;
 }
 @media(prefers-color-scheme:dark){
   :root{
-    --bg:#13121f; --card:#1e1d2e;
-    --text:#f0eeff; --text2:#9992bb; --text3:#5a5475;
-    --border:rgba(175,169,236,0.12);
-    --purple-xl:#2a2650; --amber-xl:#2e2200; --teal-xl:#0a2c20; --coral-xl:#2e1208;
+    --bg:#0f1e2e; --card:#172130;
+    --text:#e8f4ff; --text2:#7a9ab0; --text3:#3a5a70;
+    --border:rgba(91,155,213,0.15);
+    --blue-xl:#0e2840; --amber-xl:#2e2000; --teal-xl:#0a2c20;
+    --coral-xl:#2e1208; --red-xl:#2e0a0a; --purple-xl:#1e1c40;
   }
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
@@ -36,160 +52,172 @@ html,body{height:100%;background:var(--bg);font-family:var(--font);color:var(--t
 .screen.active{display:flex}
 
 /* TOPBAR */
-.topbar{background:linear-gradient(135deg,#534AB7 0%,#7F77DD 60%,#AFA9EC 100%);padding:12px 20px 14px;padding-top:max(env(safe-area-inset-top,0px),12px);flex-shrink:0}
+.topbar{background:linear-gradient(135deg,#2E6FA3 0%,#5B9BD5 65%,#89C0E8 100%);padding:12px 20px 14px;padding-top:max(env(safe-area-inset-top,0px),12px);flex-shrink:0}
 .topbar-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.user-greet{font-size:13px;color:rgba(255,255,255,0.7);font-family:var(--font2)}
-.user-name{font-size:20px;font-weight:800;color:white}
+.user-greet{font-size:12px;color:rgba(255,255,255,0.7);font-family:var(--font2)}
+.user-name{font-size:20px;font-weight:800;color:white;letter-spacing:-.3px}
 .date-pill{background:rgba(255,255,255,0.2);border:1px solid rgba(255,255,255,0.3);border-radius:20px;padding:4px 12px;font-size:12px;font-weight:700;color:white}
 .xp-row{display:flex;align-items:center;gap:10px}
 .xp-bg{flex:1;height:8px;background:rgba(255,255,255,0.2);border-radius:4px;overflow:hidden}
-.xp-fill{height:100%;background:#FAC775;border-radius:4px;transition:width 0.5s cubic-bezier(.34,1.56,.64,1)}
+.xp-fill{height:100%;background:#FAC775;border-radius:4px;transition:width .5s cubic-bezier(.34,1.56,.64,1)}
 .xp-label{font-size:12px;color:rgba(255,255,255,0.85);white-space:nowrap;font-family:var(--font2);font-weight:600}
 
-/* COMPANION */
-.companion-bar{background:var(--card);border-bottom:1px solid var(--border);padding:12px 16px;display:flex;align-items:center;gap:12px;flex-shrink:0}
-.rufus-btn{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#FAC775,#EF9F27);border:3px solid rgba(255,255,255,0.5);display:flex;align-items:center;justify-content:center;font-size:26px;cursor:pointer;flex-shrink:0;box-shadow:0 4px 12px rgba(239,159,39,0.3);transition:transform 0.2s cubic-bezier(.34,1.56,.64,1);user-select:none}
-.rufus-btn:active{transform:scale(0.88) rotate(-8deg)}
-.rufus-bubble{flex:1;background:var(--purple-xl);border-radius:14px 14px 14px 4px;padding:9px 13px;font-size:13px;line-height:1.55;color:var(--purple-d);font-weight:600}
+/* OTTO COMPANION */
+.otto-bar{background:var(--card);border-bottom:1px solid var(--border);padding:11px 14px;display:flex;align-items:center;gap:12px;flex-shrink:0}
+.otto-avatar{width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,#89C0E8,#5B9BD5);border:3px solid rgba(255,255,255,0.6);display:flex;align-items:center;justify-content:center;font-size:28px;cursor:pointer;flex-shrink:0;box-shadow:0 4px 14px rgba(91,155,213,0.35);transition:transform .2s cubic-bezier(.34,1.56,.64,1);user-select:none;position:relative}
+.otto-avatar:active{transform:scale(.88) rotate(-8deg)}
+.otto-mood{position:absolute;bottom:-2px;right:-2px;font-size:14px;line-height:1}
+.otto-bubble{flex:1;background:var(--blue-xl);border-radius:14px 14px 14px 4px;padding:9px 13px;font-size:13px;line-height:1.55;color:var(--blue-d);font-weight:600;transition:opacity .25s;min-height:40px}
 
 /* SCROLL */
-.scroll-area{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:14px 16px}
+.scroll-area{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:13px 15px}
 
-/* SECTION LABEL */
-.sec-label{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--text3);margin-bottom:10px;font-family:var(--font2)}
+/* SECTION */
+.sec-label{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--text3);margin-bottom:9px;font-family:var(--font2)}
 
 /* TASK CARDS */
-.task-card{background:var(--card);border:1px solid var(--border);border-radius:var(--r);padding:13px 12px;margin-bottom:9px;display:flex;align-items:center;gap:10px;position:relative;overflow:hidden;transition:transform .12s,opacity .2s}
-.task-card.swiping{transition:none}
-.task-card.removing{transform:translateX(-110%);opacity:0;transition:all .3s ease}
-.task-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--purple);border-radius:4px 0 0 4px}
-.task-card.done{opacity:.45}
+.task-card{background:var(--card);border:1.5px solid var(--border);border-radius:var(--r);padding:13px 12px;margin-bottom:9px;display:flex;align-items:center;gap:10px;position:relative;overflow:hidden;transition:transform .15s,opacity .25s,border-color .4s,background .4s}
+.task-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--blue);border-radius:4px 0 0 4px;transition:background .4s}
+.task-card.done{opacity:.42}
 .task-card.done .task-title{text-decoration:line-through}
+.task-card.removing{transform:translateX(-110%);opacity:0;transition:all .28s ease}
 
-.check-ring{width:24px;height:24px;border-radius:50%;border:2.5px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .25s cubic-bezier(.34,1.56,.64,1);background:transparent;cursor:pointer}
+/* URGENCY COLORS */
+.task-card.urgent-low  { border-color:rgba(239,159,39,.35); background:rgba(250,238,218,.18); }
+.task-card.urgent-low::before { background:var(--amber); }
+.task-card.urgent-mid  { border-color:rgba(240,153,123,.5); background:rgba(250,236,231,.25); }
+.task-card.urgent-mid::before { background:var(--coral-l); }
+.task-card.urgent-high { border-color:rgba(192,57,43,.5);  background:rgba(253,236,236,.3); }
+.task-card.urgent-high::before { background:var(--red); }
+.task-card.urgent-high .task-title { color:var(--red); }
+
+.check-ring{width:24px;height:24px;border-radius:50%;border:2.5px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all .25s cubic-bezier(.34,1.56,.64,1);cursor:pointer}
 .check-ring.on{background:var(--teal-l);border-color:var(--teal-l)}
 .check-ring.on::after{content:'✓';font-size:13px;color:white;font-weight:800}
 
 .task-body{flex:1;min-width:0;cursor:pointer}
-.task-title{font-size:15px;font-weight:700;color:var(--text);line-height:1.3}
-.task-diff{display:inline-block;margin-top:5px;font-size:11px;font-weight:700;padding:2px 9px;border-radius:20px;font-family:var(--font2)}
-.diff-easy{background:var(--teal-xl);color:var(--teal)}
-.diff-medium{background:var(--purple-xl);color:var(--purple-d)}
-.diff-hard{background:var(--amber-xl);color:var(--amber-d)}
+.task-title{font-size:15px;font-weight:700;line-height:1.3;transition:color .4s}
+.task-meta{display:flex;gap:5px;margin-top:5px;flex-wrap:wrap;align-items:center}
+.chip{font-size:11px;font-weight:700;padding:2px 8px;border-radius:20px;font-family:var(--font2)}
+.chip-easy{background:var(--teal-xl);color:var(--teal)}
+.chip-medium{background:var(--blue-xl);color:var(--blue-d)}
+.chip-hard{background:var(--amber-xl);color:var(--amber-d)}
+.chip-repeat{background:var(--purple-xl);color:var(--purple)}
+.chip-urgent{background:var(--red-xl);color:var(--red);animation:urgentPulse 2s ease-in-out infinite}
+@keyframes urgentPulse{0%,100%{opacity:1}50%{opacity:.6}}
 
-.xp-badge{background:var(--amber-xl);color:var(--amber-d);font-size:12px;font-weight:800;padding:4px 10px;border-radius:20px;white-space:nowrap;flex-shrink:0;font-family:var(--font2)}
-.delete-btn{width:32px;height:32px;border-radius:50%;border:none;background:var(--coral-xl);color:var(--coral);font-size:16px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:background .15s}
-.delete-btn:hover{background:var(--coral);color:white}
+.xp-badge{background:var(--amber-xl);color:var(--amber-d);font-size:12px;font-weight:800;padding:4px 9px;border-radius:20px;white-space:nowrap;flex-shrink:0;font-family:var(--font2)}
+.del-btn{width:30px;height:30px;border-radius:50%;border:none;background:transparent;color:var(--text3);font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:all .15s;line-height:1}
+.del-btn:hover{background:var(--coral-xl);color:var(--coral)}
 
 /* EMPTY STATE */
-.empty-state{text-align:center;padding:40px 20px;color:var(--text3)}
-.empty-emoji{font-size:48px;margin-bottom:12px}
-.empty-text{font-size:15px;font-weight:600;color:var(--text2);margin-bottom:6px}
-.empty-sub{font-size:13px;font-family:var(--font2)}
+.empty-state{text-align:center;padding:44px 20px}
+.empty-emoji{font-size:52px;margin-bottom:12px}
+.empty-text{font-size:16px;font-weight:700;color:var(--text2);margin-bottom:5px}
+.empty-sub{font-size:13px;color:var(--text3);font-family:var(--font2)}
 
 /* FAB */
-.fab{position:absolute;bottom:80px;right:18px;width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,#7F77DD,#534AB7);border:none;color:white;font-size:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 6px 20px rgba(127,119,221,.45);transition:transform .2s cubic-bezier(.34,1.56,.64,1);z-index:20}
+.fab{position:absolute;bottom:78px;right:16px;width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,#5B9BD5,#2E6FA3);border:none;color:white;font-size:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 6px 20px rgba(46,111,163,.4);transition:transform .2s cubic-bezier(.34,1.56,.64,1);z-index:20}
 .fab:active{transform:scale(.9)}
 
 /* NAV */
 .nav-bar{display:flex;background:var(--card);border-top:1px solid var(--border);padding-bottom:env(safe-area-inset-bottom,0px);flex-shrink:0}
-.nav-btn{flex:1;padding:9px 4px 7px;border:none;background:transparent;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;color:var(--text3);font-size:9px;font-weight:700;font-family:var(--font);transition:color .15s}
-.nav-btn.on{color:var(--purple)}
-.nav-btn svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.nav-btn{flex:1;padding:9px 2px 7px;border:none;background:transparent;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;color:var(--text3);font-size:9px;font-weight:700;font-family:var(--font);transition:color .15s}
+.nav-btn.on{color:var(--blue)}
+.nav-btn svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 
 /* MODAL */
-.overlay{display:none;position:fixed;inset:0;background:rgba(20,18,40,.6);z-index:100;align-items:flex-end;justify-content:center;backdrop-filter:blur(4px)}
+.overlay{display:none;position:fixed;inset:0;background:rgba(10,25,40,.6);z-index:100;align-items:flex-end;justify-content:center;backdrop-filter:blur(4px)}
 .overlay.open{display:flex}
 .sheet{background:var(--card);border-radius:24px 24px 0 0;padding:18px 18px calc(18px + env(safe-area-inset-bottom,0px));width:100%;max-width:430px;animation:slideUp .28s cubic-bezier(.34,1.56,.64,1)}
 @keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
 .sheet-handle{width:36px;height:4px;background:var(--border);border-radius:2px;margin:0 auto 16px}
 .sheet-title{font-size:17px;font-weight:800;margin-bottom:14px}
-.field-label{font-size:11px;font-weight:700;color:var(--text2);margin-bottom:5px;font-family:var(--font2);letter-spacing:.05em;text-transform:uppercase}
+.field-label{font-size:11px;font-weight:700;color:var(--text2);margin-bottom:5px;letter-spacing:.05em;text-transform:uppercase;font-family:var(--font2)}
 .inp{width:100%;padding:11px 13px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:15px;font-weight:600;color:var(--text);background:var(--bg);font-family:var(--font);outline:none;margin-bottom:11px;transition:border-color .2s}
-.inp:focus{border-color:var(--purple)}
-.inp-row{display:flex;gap:8px;margin-bottom:11px}
-.inp-row select{flex:1}
-
-/* VOICE */
+.inp:focus{border-color:var(--blue)}
 .voice-wrap{display:flex;gap:10px;align-items:center;margin-bottom:11px}
-.voice-btn{width:44px;height:44px;border-radius:50%;background:var(--coral-xl);border:1.5px solid rgba(216,90,48,.3);color:var(--coral);font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;flex-shrink:0}
-.voice-btn.listening{background:var(--coral);color:white;animation:pulse 1s infinite}
+.voice-btn{width:44px;height:44px;border-radius:50%;background:var(--blue-xl);border:1.5px solid rgba(91,155,213,.3);color:var(--blue);font-size:20px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .2s;flex-shrink:0}
+.voice-btn.listening{background:var(--blue);color:white;animation:pulse 1s infinite}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
-.voice-hint{font-size:13px;color:var(--text2);line-height:1.4;font-family:var(--font2)}
-.voice-hint.active{color:var(--coral);font-weight:700}
-
+.voice-hint{font-size:13px;color:var(--text2);font-family:var(--font2);line-height:1.4}
+.voice-hint.active{color:var(--blue);font-weight:700}
 .btn-row{display:flex;gap:8px}
 .btn-cancel{flex:1;padding:12px;border:1.5px solid var(--border);border-radius:var(--r-sm);background:transparent;color:var(--text2);font-size:14px;font-weight:700;font-family:var(--font);cursor:pointer}
-.btn-go{flex:2;padding:12px;background:linear-gradient(135deg,#7F77DD,#534AB7);border:none;border-radius:var(--r-sm);color:white;font-size:14px;font-weight:800;font-family:var(--font);cursor:pointer}
+.btn-go{flex:2;padding:12px;background:linear-gradient(135deg,#5B9BD5,#2E6FA3);border:none;border-radius:var(--r-sm);color:white;font-size:14px;font-weight:800;font-family:var(--font);cursor:pointer}
 
-/* SCORE SCREEN */
-.score-hero{background:linear-gradient(135deg,#534AB7,#7F77DD);margin:14px 16px 0;border-radius:var(--r);padding:22px;text-align:center;color:white}
-.score-num{font-size:58px;font-weight:800;line-height:1}
+/* SCORE */
+.score-hero{background:linear-gradient(135deg,#2E6FA3,#5B9BD5);margin:14px 15px 0;border-radius:var(--r);padding:22px;text-align:center;color:white}
+.score-num{font-size:58px;font-weight:900;line-height:1}
 .score-lbl{font-size:14px;opacity:.8;margin-top:4px;font-family:var(--font2)}
 .score-date{font-size:12px;opacity:.6;margin-top:6px;font-family:var(--font2)}
-.score-bar-wrap{margin:14px 16px 0}
+.score-bar-wrap{margin:13px 15px 0}
 .score-bar-label{display:flex;justify-content:space-between;font-size:12px;color:var(--text2);font-family:var(--font2);margin-bottom:5px}
 .score-bar-bg{height:10px;background:var(--border);border-radius:5px;overflow:hidden}
-.score-bar-fill{height:100%;background:linear-gradient(90deg,#5DCAA5,#1D9E75);border-radius:5px;transition:width .6s ease}
-.mini-stats{display:flex;gap:10px;padding:14px 16px 0}
-.mini-stat{flex:1;background:var(--card);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px;text-align:center}
+.score-bar-fill{height:100%;background:linear-gradient(90deg,var(--teal-l),var(--teal));border-radius:5px;transition:width .6s}
+.mini-stats{display:flex;gap:10px;padding:13px 15px 0}
+.mini-stat{flex:1;background:var(--card);border:1px solid var(--border);border-radius:var(--r-sm);padding:11px;text-align:center}
 .mini-stat-num{font-size:24px;font-weight:800}
-.mini-stat-lbl{font-size:11px;color:var(--text2);font-family:var(--font2);font-weight:600}
-.history-list{padding:14px 16px}
+.mini-stat-lbl{font-size:10px;color:var(--text2);font-family:var(--font2);font-weight:600}
+.hist-item{background:var(--card);border:1px solid var(--border);border-radius:var(--r-sm);padding:11px 13px;margin-bottom:8px}
 
 /* CHECK-IN */
-.ci-scroll{flex:1;overflow-y:auto;padding:18px 16px}
-.ci-head{margin-bottom:20px}
-.ci-title{font-size:20px;font-weight:800}
-.ci-sub{font-size:13px;color:var(--text2);font-family:var(--font2);margin-top:2px}
+.ci-scroll{flex:1;overflow-y:auto;padding:18px 15px}
+.ci-title{font-size:20px;font-weight:800;margin-bottom:4px}
+.ci-sub{font-size:13px;color:var(--text2);font-family:var(--font2);margin-bottom:20px}
 .ci-q{font-size:15px;font-weight:700;margin-bottom:10px}
 .ci-question{margin-bottom:20px}
 .ci-opts{display:flex;gap:8px;flex-wrap:wrap}
-.ci-opt{padding:8px 15px;border-radius:20px;border:2px solid var(--border);background:var(--card);font-size:14px;font-weight:700;cursor:pointer;transition:all .15s;font-family:var(--font);color:var(--text2)}
-.ci-opt.sel{background:var(--purple);border-color:var(--purple);color:white}
+.ci-opt{padding:8px 14px;border-radius:20px;border:2px solid var(--border);background:var(--card);font-size:14px;font-weight:700;cursor:pointer;transition:all .15s;font-family:var(--font);color:var(--text2)}
+.ci-opt.sel{background:var(--blue);border-color:var(--blue);color:white}
 .mood-row{display:flex;gap:10px}
 .mood-opt{font-size:28px;cursor:pointer;padding:6px;border-radius:12px;border:2px solid transparent;transition:all .15s}
-.mood-opt.sel{background:var(--purple-xl);border-color:var(--purple)}
-.ci-submit{width:100%;padding:13px;background:linear-gradient(135deg,#7F77DD,#534AB7);border:none;border-radius:var(--r-sm);color:white;font-size:15px;font-weight:800;font-family:var(--font);cursor:pointer;margin-top:6px}
+.mood-opt.sel{background:var(--blue-xl);border-color:var(--blue)}
+.ci-submit{width:100%;padding:13px;background:linear-gradient(135deg,#5B9BD5,#2E6FA3);border:none;border-radius:var(--r-sm);color:white;font-size:15px;font-weight:800;font-family:var(--font);cursor:pointer;margin-top:6px}
 .ci-done{background:var(--teal-xl);border-radius:var(--r);padding:24px;text-align:center;display:none}
 .ci-done-emoji{font-size:44px;margin-bottom:8px}
 .ci-done-title{font-size:17px;font-weight:800;color:var(--teal)}
 .ci-done-sub{font-size:13px;color:var(--teal);font-family:var(--font2);margin-top:4px}
 
 /* RECAP */
-.recap-scroll{flex:1;overflow-y:auto;padding:18px 16px}
-.recap-card{background:linear-gradient(135deg,var(--purple-xl),#E6F1FB);border-radius:var(--r);padding:20px;margin-bottom:14px}
+.recap-scroll{flex:1;overflow-y:auto;padding:18px 15px}
+.recap-card{background:linear-gradient(135deg,var(--blue-xl),#E0F0FF);border-radius:var(--r);padding:20px;margin-bottom:14px}
 .recap-emoji{font-size:40px;text-align:center;margin-bottom:12px}
-.recap-heading{font-size:16px;font-weight:800;color:var(--purple-d);margin-bottom:8px}
-.recap-text{font-size:14px;line-height:1.8;color:#534AB7;font-family:var(--font2)}
-.dots span{display:inline-block;width:7px;height:7px;background:var(--purple);border-radius:50%;animation:bob 1.2s ease-in-out infinite;margin-right:3px}
+.recap-heading{font-size:16px;font-weight:800;color:var(--blue-d);margin-bottom:8px}
+.recap-text{font-size:14px;line-height:1.8;color:var(--blue-d);font-family:var(--font2)}
+.dots span{display:inline-block;width:6px;height:6px;background:var(--blue);border-radius:50%;animation:bob 1.2s ease-in-out infinite;margin-right:3px}
 .dots span:nth-child(2){animation-delay:.2s}
 .dots span:nth-child(3){animation-delay:.4s}
 @keyframes bob{0%,80%,100%{transform:translateY(0);opacity:.3}40%{transform:translateY(-6px);opacity:1}}
-.xp-today-box{text-align:center;padding:14px;background:var(--amber-xl);border-radius:var(--r-sm);margin-bottom:12px;display:none}
+.xp-today-box{text-align:center;padding:13px;background:var(--amber-xl);border-radius:var(--r-sm);margin-bottom:12px;display:none}
 .xp-today-num{font-size:28px;font-weight:800;color:var(--amber-d)}
 .xp-today-lbl{font-size:13px;color:var(--amber-d);font-family:var(--font2);opacity:.8}
-.done-panel{background:var(--card);border:1px solid var(--border);border-radius:var(--r-sm);padding:14px;margin-bottom:12px;display:none}
+.done-panel{background:var(--card);border:1px solid var(--border);border-radius:var(--r-sm);padding:13px;margin-bottom:12px;display:none}
 .done-panel-title{font-size:13px;font-weight:800;margin-bottom:8px}
 .done-row{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text2);padding:3px 0;font-family:var(--font2)}
 .done-row::before{content:'✓';color:var(--teal-l);font-weight:900}
-.recap-btn{width:100%;padding:13px;background:linear-gradient(135deg,#7F77DD,#534AB7);border:none;border-radius:var(--r-sm);color:white;font-size:15px;font-weight:800;font-family:var(--font);cursor:pointer;margin-bottom:10px}
+.recap-btn{width:100%;padding:13px;background:linear-gradient(135deg,#5B9BD5,#2E6FA3);border:none;border-radius:var(--r-sm);color:white;font-size:15px;font-weight:800;font-family:var(--font);cursor:pointer;margin-bottom:10px}
 .recap-btn:disabled{opacity:.6;cursor:default}
 
 /* SETTINGS */
-.settings-scroll{flex:1;overflow-y:auto;padding:18px 16px}
+.settings-scroll{flex:1;overflow-y:auto;padding:18px 15px}
 .settings-title{font-size:20px;font-weight:800;margin-bottom:18px}
-.settings-sec-title{font-size:11px;font-weight:700;color:var(--text3);letter-spacing:.08em;text-transform:uppercase;font-family:var(--font2);margin-bottom:8px}
-.settings-sec{margin-bottom:20px}
-.srow{background:var(--card);border:1px solid var(--border);border-radius:var(--r-sm);padding:13px 14px;margin-bottom:8px;display:flex;align-items:center;gap:12px;cursor:default}
+.s-sec-title{font-size:11px;font-weight:700;color:var(--text3);letter-spacing:.08em;text-transform:uppercase;font-family:var(--font2);margin-bottom:8px}
+.s-sec{margin-bottom:20px}
+.srow{background:var(--card);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 14px;margin-bottom:8px;display:flex;align-items:center;gap:12px}
 .srow-icon{font-size:20px;flex-shrink:0}
 .srow-body{flex:1;min-width:0}
 .srow-label{font-size:14px;font-weight:700}
 .srow-sub{font-size:12px;color:var(--text2);font-family:var(--font2);margin-top:2px}
 .srow-inp{width:100%;background:transparent;border:none;font-size:14px;font-weight:700;font-family:var(--font);color:var(--text);outline:none}
-.api-row{background:var(--card);border:1px solid var(--border);border-radius:var(--r-sm);padding:13px 14px;margin-bottom:8px}
-.api-inp{width:100%;background:transparent;border:none;font-size:13px;font-family:monospace;color:var(--text2);outline:none;margin-top:6px;word-break:break-all}
-.save-btn{width:100%;padding:12px;background:var(--purple);border:none;border-radius:var(--r-sm);color:white;font-size:15px;font-weight:800;font-family:var(--font);cursor:pointer}
+.toggle{width:44px;height:24px;border-radius:12px;background:var(--border);position:relative;cursor:pointer;transition:background .2s;flex-shrink:0;border:none}
+.toggle.on{background:var(--blue)}
+.toggle::after{content:'';position:absolute;width:18px;height:18px;border-radius:50%;background:white;top:3px;left:3px;transition:left .2s;box-shadow:0 1px 3px rgba(0,0,0,.2)}
+.toggle.on::after{left:23px}
+.api-row{background:var(--card);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 14px;margin-bottom:8px}
+.api-inp{width:100%;background:transparent;border:none;font-size:13px;font-family:monospace;color:var(--text2);outline:none;margin-top:6px}
+.save-btn{width:100%;padding:12px;background:var(--blue);border:none;border-radius:var(--r-sm);color:white;font-size:15px;font-weight:800;font-family:var(--font);cursor:pointer}
+.test-btn{width:100%;padding:10px;background:var(--teal-xl);border:1px solid rgba(29,158,117,.3);border-radius:var(--r-sm);color:var(--teal);font-size:14px;font-weight:700;font-family:var(--font);cursor:pointer;margin-bottom:8px}
 
 /* CONFETTI */
 #confetti-layer{position:fixed;inset:0;pointer-events:none;z-index:999;overflow:hidden}
@@ -197,17 +225,13 @@ html,body{height:100%;background:var(--bg);font-family:var(--font);color:var(--t
 @keyframes fall{0%{transform:translateY(-20px) rotate(0deg);opacity:1}100%{transform:translateY(110vh) rotate(540deg);opacity:0}}
 
 /* TOAST */
-#toast{position:fixed;bottom:88px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--text);color:var(--bg);padding:10px 20px;border-radius:20px;font-size:14px;font-weight:700;opacity:0;transition:all .3s;z-index:998;white-space:nowrap;max-width:90vw;text-align:center}
+#toast{position:fixed;bottom:86px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--text);color:var(--bg);padding:10px 20px;border-radius:20px;font-size:14px;font-weight:700;opacity:0;transition:all .3s;z-index:998;white-space:nowrap;max-width:88vw;text-align:center}
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
 /* ACHIEVEMENT */
-#ach-popup{position:fixed;bottom:88px;left:50%;transform:translateX(-50%) translateY(24px);background:linear-gradient(135deg,#FAC775,#EF9F27);color:white;border-radius:20px;padding:14px 22px;text-align:center;font-weight:800;opacity:0;transition:all .4s cubic-bezier(.34,1.56,.64,1);z-index:997;min-width:200px;box-shadow:0 8px 24px rgba(239,159,39,.35)}
+#ach-popup{position:fixed;bottom:86px;left:50%;transform:translateX(-50%) translateY(24px);background:linear-gradient(135deg,#5B9BD5,#2E6FA3);color:white;border-radius:20px;padding:13px 20px;text-align:center;font-weight:800;opacity:0;transition:all .4s cubic-bezier(.34,1.56,.64,1);z-index:997;min-width:200px;box-shadow:0 8px 24px rgba(46,111,163,.35)}
 #ach-popup.show{opacity:1;transform:translateX(-50%) translateY(0)}
 .ach-emoji{font-size:28px;display:block;margin-bottom:2px}
-
-/* SERVER NOTE */
-.server-note{background:var(--amber-xl);border:1px solid rgba(186,117,23,.3);border-radius:var(--r-sm);padding:12px 14px;margin-bottom:12px;font-size:13px;color:var(--amber-d);font-family:var(--font2);line-height:1.5;display:none}
-.server-note strong{font-weight:700}
 </style>
 </head>
 <body>
@@ -217,306 +241,363 @@ html,body{height:100%;background:var(--bg);font-family:var(--font);color:var(--t
 
 <div id="app">
 
-  <!-- MODAL: ADD TASK -->
-  <div class="overlay" id="addModal">
-    <div class="sheet">
-      <div class="sheet-handle"></div>
-      <div class="sheet-title">Neue Aufgabe 📝</div>
-      <div class="server-note" id="serverNote">
-        <strong>Tipp:</strong> Für Spracheingabe & KI-Funktionen muss die App über einen lokalen Server laufen.<br>
-        Terminal: <code style="background:rgba(0,0,0,.1);padding:1px 5px;border-radius:4px">python3 -m http.server 8080</code> → dann <strong>http://localhost:8080</strong> öffnen.
-      </div>
-      <div class="field-label">AUFGABE</div>
-      <div class="voice-wrap">
-        <button class="voice-btn" id="voiceBtn" onclick="toggleVoice()">🎤</button>
-        <div class="voice-hint" id="voiceHint">Per Mikrofon diktieren oder unten tippen</div>
-      </div>
-      <input class="inp" id="taskInput" placeholder="Was möchtest du erledigen?" />
-      <div class="field-label">SCHWIERIGKEIT</div>
-      <select class="inp" id="taskDiff">
-        <option value="easy">😌 Leicht (15 XP)</option>
-        <option value="medium" selected>💪 Mittel (75 XP)</option>
-        <option value="hard">🔥 Unangenehm (300 XP)</option>
-      </select>
-      <div class="field-label">WIEDERHOLUNG</div>
-      <select class="inp" id="taskRepeat">
-        <option value="once">Einmalig</option>
-        <option value="daily">Täglich</option>
-        <option value="weekly">Wöchentlich</option>
-        <option value="monthly">Monatlich</option>
-      </select>
-      <div class="btn-row">
-        <button class="btn-cancel" onclick="closeModal()">Abbrechen</button>
-        <button class="btn-go" onclick="addTask()">Hinzufügen ✓</button>
-      </div>
+<!-- MODAL: ADD TASK -->
+<div class="overlay" id="addModal">
+  <div class="sheet">
+    <div class="sheet-handle"></div>
+    <div class="sheet-title">Neue Aufgabe 🦦</div>
+    <div class="field-label">AUFGABE</div>
+    <div class="voice-wrap">
+      <button class="voice-btn" id="voiceBtn" onclick="toggleVoice()">🎤</button>
+      <div class="voice-hint" id="voiceHint">Diktieren oder unten tippen</div>
     </div>
-  </div>
-
-  <!-- SCREEN: TASKS -->
-  <div class="screen active" id="screen-tasks">
-    <div class="topbar">
-      <div class="topbar-row">
-        <div>
-          <div class="user-greet">Hallo,</div>
-          <div class="user-name" id="topName">Jonas 👋</div>
-        </div>
-        <div class="date-pill" id="topDate"></div>
-      </div>
-      <div class="xp-row">
-        <div class="xp-bg"><div class="xp-fill" id="xpFill" style="width:0%"></div></div>
-        <div class="xp-label" id="xpLabel">0 XP heute</div>
-      </div>
+    <input class="inp" id="taskInput" placeholder="Was möchtest du erledigen?" />
+    <div class="field-label">SCHWIERIGKEIT</div>
+    <select class="inp" id="taskDiff">
+      <option value="easy">😌 Leicht (15 XP)</option>
+      <option value="medium" selected>💪 Mittel (75 XP)</option>
+      <option value="hard">🔥 Unangenehm (300 XP)</option>
+    </select>
+    <div class="field-label">WIEDERHOLUNG</div>
+    <select class="inp" id="taskRepeat">
+      <option value="once">Einmalig</option>
+      <option value="daily">Täglich</option>
+      <option value="weekly">Wöchentlich</option>
+      <option value="monthly">Monatlich</option>
+    </select>
+    <div class="btn-row">
+      <button class="btn-cancel" onclick="closeModal()">Abbrechen</button>
+      <button class="btn-go" onclick="addTask()">Hinzufügen ✓</button>
     </div>
-    <div class="companion-bar">
-      <div class="rufus-btn" onclick="pokeRufus()">🦊</div>
-      <div class="rufus-bubble" id="rufusBubble">Bereit für heute? Ich glaube an dich! 🐾</div>
-    </div>
-    <div class="scroll-area" id="taskScroll">
-      <div class="sec-label">Heute</div>
-      <div id="taskList"></div>
-      <div style="height:80px"></div>
-    </div>
-    <button class="fab" onclick="openModal()">+</button>
-    <nav class="nav-bar" id="nav-tasks">
-      <button class="nav-btn on" onclick="nav('tasks',this)"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Aufgaben</button>
-      <button class="nav-btn" onclick="nav('score',this)"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Score</button>
-      <button class="nav-btn" onclick="nav('checkin',this)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Check-in</button>
-      <button class="nav-btn" onclick="nav('recap',this)"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Abschluss</button>
-      <button class="nav-btn" onclick="nav('settings',this)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l-.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Einstellung</button>
-    </nav>
-  </div>
-
-  <!-- SCREEN: SCORE -->
-  <div class="screen" id="screen-score">
-    <div class="score-hero">
-      <div class="score-num" id="scoreNum">0</div>
-      <div class="score-lbl">XP heute</div>
-      <div class="score-date" id="scoreDate"></div>
-    </div>
-    <div class="score-bar-wrap">
-      <div class="score-bar-label"><span>Tagesziel</span><span id="scoreBarPct">0 / 500 XP</span></div>
-      <div class="score-bar-bg"><div class="score-bar-fill" id="scoreBarFill" style="width:0%"></div></div>
-    </div>
-    <div class="mini-stats">
-      <div class="mini-stat"><div class="mini-stat-num" id="statDone" style="color:var(--teal)">0</div><div class="mini-stat-lbl">Erledigt</div></div>
-      <div class="mini-stat"><div class="mini-stat-num" id="statStreak" style="color:var(--amber)">0 🔥</div><div class="mini-stat-lbl">Streak</div></div>
-      <div class="mini-stat"><div class="mini-stat-num" id="statTotal" style="color:var(--purple)">0</div><div class="mini-stat-lbl">Gesamt-XP</div></div>
-    </div>
-    <div class="history-list">
-      <div class="sec-label" style="margin-top:14px">Letzte Tage</div>
-      <div id="historyList"></div>
-    </div>
-    <nav class="nav-bar">
-      <button class="nav-btn" onclick="nav('tasks',this)"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Aufgaben</button>
-      <button class="nav-btn on" onclick="nav('score',this)"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Score</button>
-      <button class="nav-btn" onclick="nav('checkin',this)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Check-in</button>
-      <button class="nav-btn" onclick="nav('recap',this)"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Abschluss</button>
-      <button class="nav-btn" onclick="nav('settings',this)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l-.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Einstellung</button>
-    </nav>
-  </div>
-
-  <!-- SCREEN: CHECK-IN -->
-  <div class="screen" id="screen-checkin">
-    <div class="ci-scroll">
-      <div class="ci-head"><div class="ci-title">Abend-Check-in 🌙</div><div class="ci-sub">Wie war dein Tag?</div></div>
-      <div id="ciForm">
-        <div class="ci-question">
-          <div class="ci-q">😊 Stimmung heute?</div>
-          <div class="mood-row">
-            <div class="mood-opt" data-v="terrible" onclick="pickMood(this)">😫</div>
-            <div class="mood-opt" data-v="bad" onclick="pickMood(this)">😕</div>
-            <div class="mood-opt" data-v="ok" onclick="pickMood(this)">😐</div>
-            <div class="mood-opt" data-v="good" onclick="pickMood(this)">🙂</div>
-            <div class="mood-opt" data-v="great" onclick="pickMood(this)">😄</div>
-          </div>
-        </div>
-        <div class="ci-question">
-          <div class="ci-q">💪 Sport heute?</div>
-          <div class="ci-opts">
-            <div class="ci-opt" data-g="sport" data-v="none" onclick="pickOpt(this)">Gar nicht</div>
-            <div class="ci-opt" data-g="sport" data-v="little" onclick="pickOpt(this)">Ein bisschen</div>
-            <div class="ci-opt" data-g="sport" data-v="much" onclick="pickOpt(this)">Richtig viel 🔥</div>
-          </div>
-        </div>
-        <div class="ci-question">
-          <div class="ci-q">💧 Genug getrunken?</div>
-          <div class="ci-opts">
-            <div class="ci-opt" data-g="water" data-v="no" onclick="pickOpt(this)">Kaum</div>
-            <div class="ci-opt" data-g="water" data-v="ok" onclick="pickOpt(this)">Geht so</div>
-            <div class="ci-opt" data-g="water" data-v="yes" onclick="pickOpt(this)">Ja!</div>
-          </div>
-        </div>
-        <div class="ci-question">
-          <div class="ci-q">🎨 Etwas Kreatives?</div>
-          <div class="ci-opts">
-            <div class="ci-opt" data-g="creative" data-v="no" onclick="pickOpt(this)">Nein</div>
-            <div class="ci-opt" data-g="creative" data-v="yes" onclick="pickOpt(this)">Ja 🎉</div>
-          </div>
-        </div>
-        <button class="ci-submit" onclick="submitCheckin()">Abschließen (+50 XP) ✓</button>
-      </div>
-      <div class="ci-done" id="ciDone">
-        <div class="ci-done-emoji">🦊✨</div>
-        <div class="ci-done-title">Rufus ist stolz auf dich!</div>
-        <div class="ci-done-sub">Check-in für heute erledigt.</div>
-      </div>
-    </div>
-    <nav class="nav-bar">
-      <button class="nav-btn" onclick="nav('tasks',this)"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Aufgaben</button>
-      <button class="nav-btn" onclick="nav('score',this)"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Score</button>
-      <button class="nav-btn on" onclick="nav('checkin',this)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Check-in</button>
-      <button class="nav-btn" onclick="nav('recap',this)"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Abschluss</button>
-      <button class="nav-btn" onclick="nav('settings',this)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l-.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Einstellung</button>
-    </nav>
-  </div>
-
-  <!-- SCREEN: RECAP -->
-  <div class="screen" id="screen-recap">
-    <div class="recap-scroll">
-      <div class="recap-card">
-        <div class="recap-emoji">🌙</div>
-        <div class="recap-heading">Rufus' Tagesabschluss</div>
-        <div class="recap-text" id="recapText">Drück den Button — Rufus schreibt dir einen persönlichen Rückblick auf deinen Tag.</div>
-      </div>
-      <div class="xp-today-box" id="xpTodayBox"><div class="xp-today-num" id="xpTodayNum">+0 XP</div><div class="xp-today-lbl">heute verdient 🏆</div></div>
-      <div class="done-panel" id="donePanel"><div class="done-panel-title">Heute erledigt</div><div id="donePanelItems"></div></div>
-      <button class="recap-btn" id="recapBtn" onclick="generateRecap()">✨ Tagesabschluss erstellen</button>
-    </div>
-    <nav class="nav-bar">
-      <button class="nav-btn" onclick="nav('tasks',this)"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Aufgaben</button>
-      <button class="nav-btn" onclick="nav('score',this)"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Score</button>
-      <button class="nav-btn" onclick="nav('checkin',this)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Check-in</button>
-      <button class="nav-btn on" onclick="nav('recap',this)"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Abschluss</button>
-      <button class="nav-btn" onclick="nav('settings',this)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l-.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Einstellung</button>
-    </nav>
-  </div>
-
-  <!-- SCREEN: SETTINGS -->
-  <div class="screen" id="screen-settings">
-    <div class="settings-scroll">
-      <div class="settings-title">⚙️ Einstellungen</div>
-      <div class="settings-sec">
-        <div class="settings-sec-title">Profil</div>
-        <div class="srow">
-          <div class="srow-icon">🦊</div>
-          <div class="srow-body"><div class="srow-label">Name</div><input class="srow-inp" id="nameInp" placeholder="Wie heißt du?" /></div>
-        </div>
-        <div class="srow">
-          <div class="srow-icon">🎯</div>
-          <div class="srow-body"><div class="srow-label">Tagesziel (XP)</div><input class="srow-inp" id="goalInp" type="number" placeholder="500" /></div>
-        </div>
-      </div>
-      <div class="settings-sec">
-        <div class="settings-sec-title">KI — Anthropic API Key</div>
-        <div class="api-row">
-          <div class="srow-label" style="font-size:13px;font-weight:700">🔑 API Key</div>
-          <div class="srow-sub" style="font-size:12px;color:var(--text2);font-family:var(--font2);margin-top:2px">Für Rufus' persönliche Nachrichten & Tagesabschluss.</div>
-          <input class="api-inp" id="apiKeyInp" type="password" placeholder="sk-ant-..." />
-        </div>
-        <div class="srow" style="cursor:pointer;background:var(--teal-xl)" onclick="testApiKey()">
-          <div class="srow-icon">🧪</div>
-          <div class="srow-body"><div class="srow-label" style="color:var(--teal)">API Key testen</div><div class="srow-sub" id="apiTestResult">Verbindung prüfen</div></div>
-        </div>
-      </div>
-      <div class="settings-sec">
-        <div class="settings-sec-title">Daten</div>
-        <div class="srow" style="cursor:pointer" onclick="exportData()">
-          <div class="srow-icon">📤</div>
-          <div class="srow-body"><div class="srow-label">Exportieren</div><div class="srow-sub">Alle Daten als JSON</div></div>
-        </div>
-        <div class="srow" style="cursor:pointer" onclick="if(confirm('Wirklich alles zurücksetzen?')){clearAll()}">
-          <div class="srow-icon" style="filter:hue-rotate(300deg)">🗑️</div>
-          <div class="srow-body"><div class="srow-label" style="color:var(--coral)">Zurücksetzen</div><div class="srow-sub">Löscht alle Daten</div></div>
-        </div>
-      </div>
-      <button class="save-btn" onclick="saveSettings()">Speichern ✓</button>
-      <div style="height:20px"></div>
-    </div>
-    <nav class="nav-bar">
-      <button class="nav-btn" onclick="nav('tasks',this)"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Aufgaben</button>
-      <button class="nav-btn" onclick="nav('score',this)"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Score</button>
-      <button class="nav-btn" onclick="nav('checkin',this)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Check-in</button>
-      <button class="nav-btn" onclick="nav('recap',this)"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Abschluss</button>
-      <button class="nav-btn on" onclick="nav('settings',this)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l-.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Einstellung</button>
-    </nav>
   </div>
 </div>
 
-<script>
-// ── HELPERS ──
-const todayKey = () => new Date().toISOString().slice(0,10); // "2025-06-19"
-const fmtDate = (d) => new Date(d).toLocaleDateString('de-DE',{weekday:'short',day:'numeric',month:'short'});
-const isLocalhost = () => true; // GitHub Pages & localhost both fine
+<!-- SCREEN: TASKS -->
+<div class="screen active" id="screen-tasks">
+  <div class="topbar">
+    <div class="topbar-row">
+      <div><div class="user-greet">Hallo,</div><div class="user-name" id="topName">Jonas 👋</div></div>
+      <div class="date-pill" id="topDate"></div>
+    </div>
+    <div class="xp-row">
+      <div class="xp-bg"><div class="xp-fill" id="xpFill" style="width:0%"></div></div>
+      <div class="xp-label" id="xpLabel">0 XP heute</div>
+    </div>
+  </div>
+  <div class="otto-bar">
+    <div class="otto-avatar" onclick="pokeOtto()" id="ottoAvatar">🦦<div class="otto-mood" id="ottoMood">😊</div></div>
+    <div class="otto-bubble" id="ottoBubble">Hey! Ich bin Otto. Was schaffen wir heute? 🦦</div>
+  </div>
+  <div class="scroll-area">
+    <div class="sec-label">Heute</div>
+    <div id="taskList"></div>
+    <div style="height:80px"></div>
+  </div>
+  <button class="fab" onclick="openModal()">+</button>
+  <nav class="nav-bar">
+    <button class="nav-btn on" onclick="nav('tasks',this)"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Aufgaben</button>
+    <button class="nav-btn" onclick="nav('score',this)"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Score</button>
+    <button class="nav-btn" onclick="nav('checkin',this)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Check-in</button>
+    <button class="nav-btn" onclick="nav('recap',this)"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Abschluss</button>
+    <button class="nav-btn" onclick="nav('settings',this)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l-.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Einstellung</button>
+  </nav>
+</div>
 
-// ── DEFAULT STATE ──
+<!-- SCREEN: SCORE -->
+<div class="screen" id="screen-score">
+  <div class="score-hero">
+    <div class="score-num" id="scoreNum">0</div>
+    <div class="score-lbl">XP heute</div>
+    <div class="score-date" id="scoreDate"></div>
+  </div>
+  <div class="score-bar-wrap">
+    <div class="score-bar-label"><span>Tagesziel</span><span id="scoreBarPct">0 / 500 XP</span></div>
+    <div class="score-bar-bg"><div class="score-bar-fill" id="scoreBarFill" style="width:0%"></div></div>
+  </div>
+  <div class="mini-stats">
+    <div class="mini-stat"><div class="mini-stat-num" id="statDone" style="color:var(--teal)">0</div><div class="mini-stat-lbl">Erledigt</div></div>
+    <div class="mini-stat"><div class="mini-stat-num" id="statStreak" style="color:var(--amber)">0 🔥</div><div class="mini-stat-lbl">Streak</div></div>
+    <div class="mini-stat"><div class="mini-stat-num" id="statTotal" style="color:var(--blue)">0</div><div class="mini-stat-lbl">Gesamt-XP</div></div>
+  </div>
+  <div class="scroll-area" style="padding-top:12px">
+    <div class="sec-label">Letzte Tage</div>
+    <div id="historyList"></div>
+    <div style="height:10px"></div>
+  </div>
+  <nav class="nav-bar">
+    <button class="nav-btn" onclick="nav('tasks',this)"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Aufgaben</button>
+    <button class="nav-btn on" onclick="nav('score',this)"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Score</button>
+    <button class="nav-btn" onclick="nav('checkin',this)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Check-in</button>
+    <button class="nav-btn" onclick="nav('recap',this)"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Abschluss</button>
+    <button class="nav-btn" onclick="nav('settings',this)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l-.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Einstellung</button>
+  </nav>
+</div>
+
+<!-- SCREEN: CHECKIN -->
+<div class="screen" id="screen-checkin">
+  <div class="ci-scroll">
+    <div class="ci-title">Abend-Check-in 🌙</div>
+    <div class="ci-sub">Wie war dein Tag, Jonas?</div>
+    <div id="ciForm">
+      <div class="ci-question"><div class="ci-q">😊 Stimmung?</div><div class="mood-row"><div class="mood-opt" data-v="terrible" onclick="pickMood(this)">😫</div><div class="mood-opt" data-v="bad" onclick="pickMood(this)">😕</div><div class="mood-opt" data-v="ok" onclick="pickMood(this)">😐</div><div class="mood-opt" data-v="good" onclick="pickMood(this)">🙂</div><div class="mood-opt" data-v="great" onclick="pickMood(this)">😄</div></div></div>
+      <div class="ci-question"><div class="ci-q">💪 Sport?</div><div class="ci-opts"><div class="ci-opt" data-g="sport" data-v="none" onclick="pickOpt(this)">Keinen</div><div class="ci-opt" data-g="sport" data-v="little" onclick="pickOpt(this)">Bisschen</div><div class="ci-opt" data-g="sport" data-v="much" onclick="pickOpt(this)">Richtig viel 🔥</div></div></div>
+      <div class="ci-question"><div class="ci-q">💧 Genug getrunken?</div><div class="ci-opts"><div class="ci-opt" data-g="water" data-v="no" onclick="pickOpt(this)">Kaum</div><div class="ci-opt" data-g="water" data-v="ok" onclick="pickOpt(this)">Geht so</div><div class="ci-opt" data-g="water" data-v="yes" onclick="pickOpt(this)">Ja!</div></div></div>
+      <div class="ci-question"><div class="ci-q">🎨 Kreatives gemacht?</div><div class="ci-opts"><div class="ci-opt" data-g="creative" data-v="no" onclick="pickOpt(this)">Nein</div><div class="ci-opt" data-g="creative" data-v="yes" onclick="pickOpt(this)">Ja 🎉</div></div></div>
+      <button class="ci-submit" onclick="submitCheckin()">Abschließen (+50 XP) ✓</button>
+    </div>
+    <div class="ci-done" id="ciDone"><div class="ci-done-emoji">🦦✨</div><div class="ci-done-title">Otto ist stolz auf dich!</div><div class="ci-done-sub">Check-in für heute erledigt. Schlaf gut!</div></div>
+  </div>
+  <nav class="nav-bar">
+    <button class="nav-btn" onclick="nav('tasks',this)"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Aufgaben</button>
+    <button class="nav-btn" onclick="nav('score',this)"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Score</button>
+    <button class="nav-btn on" onclick="nav('checkin',this)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Check-in</button>
+    <button class="nav-btn" onclick="nav('recap',this)"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Abschluss</button>
+    <button class="nav-btn" onclick="nav('settings',this)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l-.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Einstellung</button>
+  </nav>
+</div>
+
+<!-- SCREEN: RECAP -->
+<div class="screen" id="screen-recap">
+  <div class="recap-scroll">
+    <div class="recap-card">
+      <div class="recap-emoji">🦦</div>
+      <div class="recap-heading">Ottos Tagesabschluss</div>
+      <div class="recap-text" id="recapText">Drück den Button — Otto schreibt dir einen persönlichen Rückblick auf deinen Tag.</div>
+    </div>
+    <div class="xp-today-box" id="xpTodayBox"><div class="xp-today-num" id="xpTodayNum">+0 XP</div><div class="xp-today-lbl">heute verdient 🏆</div></div>
+    <div class="done-panel" id="donePanel"><div class="done-panel-title">Heute erledigt</div><div id="donePanelItems"></div></div>
+    <button class="recap-btn" id="recapBtn" onclick="generateRecap()">✨ Tagesabschluss erstellen</button>
+  </div>
+  <nav class="nav-bar">
+    <button class="nav-btn" onclick="nav('tasks',this)"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Aufgaben</button>
+    <button class="nav-btn" onclick="nav('score',this)"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Score</button>
+    <button class="nav-btn" onclick="nav('checkin',this)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Check-in</button>
+    <button class="nav-btn on" onclick="nav('recap',this)"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Abschluss</button>
+    <button class="nav-btn" onclick="nav('settings',this)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l-.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Einstellung</button>
+  </nav>
+</div>
+
+<!-- SCREEN: SETTINGS -->
+<div class="screen" id="screen-settings">
+  <div class="settings-scroll">
+    <div class="settings-title">⚙️ Einstellungen</div>
+    <div class="s-sec">
+      <div class="s-sec-title">Profil</div>
+      <div class="srow"><div class="srow-icon">🦦</div><div class="srow-body"><div class="srow-label">Name</div><input class="srow-inp" id="nameInp" placeholder="Wie heißt du?" /></div></div>
+      <div class="srow"><div class="srow-icon">🎯</div><div class="srow-body"><div class="srow-label">Tagesziel (XP)</div><input class="srow-inp" id="goalInp" type="number" placeholder="500" /></div></div>
+    </div>
+    <div class="s-sec">
+      <div class="s-sec-title">Sound</div>
+      <div class="srow">
+        <div class="srow-icon">🔊</div>
+        <div class="srow-body"><div class="srow-label">Motivations-Sounds</div><div class="srow-sub">Töne beim Erledigen von Aufgaben</div></div>
+        <button class="toggle" id="soundToggle" onclick="toggleSound()"></button>
+      </div>
+    </div>
+    <div class="s-sec">
+      <div class="s-sec-title">KI — Anthropic API Key</div>
+      <div class="api-row">
+        <div class="srow-label" style="font-size:13px;font-weight:700">🔑 API Key</div>
+        <div class="srow-sub" style="font-size:12px;color:var(--text2);margin-top:2px;font-family:var(--font2)">Für Ottos persönliche Nachrichten & Tagesabschluss</div>
+        <input class="api-inp" id="apiKeyInp" type="password" placeholder="sk-ant-..." />
+      </div>
+      <button class="test-btn" onclick="testApiKey()" id="testBtn">🧪 API Key testen</button>
+    </div>
+    <div class="s-sec">
+      <div class="s-sec-title">Daten</div>
+      <div class="srow" style="cursor:pointer" onclick="exportData()"><div class="srow-icon">📤</div><div class="srow-body"><div class="srow-label">Exportieren</div><div class="srow-sub">Alle Daten als JSON</div></div></div>
+      <div class="srow" style="cursor:pointer" onclick="if(confirm('Wirklich alles zurücksetzen?')){clearAll()}"><div class="srow-icon">🗑️</div><div class="srow-body"><div class="srow-label" style="color:var(--coral)">Zurücksetzen</div><div class="srow-sub">Löscht alle Aufgaben & XP</div></div></div>
+    </div>
+    <button class="save-btn" onclick="saveSettings()">Speichern ✓</button>
+    <div style="height:20px"></div>
+  </div>
+  <nav class="nav-bar">
+    <button class="nav-btn" onclick="nav('tasks',this)"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Aufgaben</button>
+    <button class="nav-btn" onclick="nav('score',this)"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Score</button>
+    <button class="nav-btn" onclick="nav('checkin',this)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Check-in</button>
+    <button class="nav-btn" onclick="nav('recap',this)"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Abschluss</button>
+    <button class="nav-btn on" onclick="nav('settings',this)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l-.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Einstellung</button>
+  </nav>
+</div>
+
+</div><!-- end #app -->
+
+<script>
+// ── AUDIO ENGINE ──
+const AC = window.AudioContext || window.webkitAudioContext;
+let audioCtx = null;
+function getAC(){ if(!audioCtx) audioCtx = new AC(); return audioCtx; }
+
+function playSound(type){
+  if(!S.soundOn) return;
+  try {
+    const ctx = getAC();
+    const g = ctx.createGain();
+    g.connect(ctx.destination);
+    const now = ctx.currentTime;
+
+    if(type === 'done_easy'){
+      // cheerful two-tone blip
+      [440,660].forEach((f,i)=>{
+        const o=ctx.createOscillator(); o.type='sine';
+        o.frequency.setValueAtTime(f, now+i*.08);
+        o.connect(g); g.gain.setValueAtTime(.18,now); g.gain.exponentialRampToValueAtTime(.001,now+.35);
+        o.start(now+i*.08); o.stop(now+.4);
+      });
+    } else if(type === 'done_medium'){
+      // ascending arpeggio
+      [330,440,550,660].forEach((f,i)=>{
+        const o=ctx.createOscillator(); o.type='triangle';
+        const og=ctx.createGain(); o.connect(og); og.connect(ctx.destination);
+        o.frequency.value=f;
+        og.gain.setValueAtTime(.15,now+i*.07);
+        og.gain.exponentialRampToValueAtTime(.001,now+i*.07+.3);
+        o.start(now+i*.07); o.stop(now+i*.07+.35);
+      });
+    } else if(type === 'done_hard'){
+      // fanfare — victory!
+      const notes=[262,330,392,523,659,784];
+      notes.forEach((f,i)=>{
+        const o=ctx.createOscillator(); o.type='square';
+        const og=ctx.createGain(); o.connect(og); og.connect(ctx.destination);
+        o.frequency.value=f;
+        og.gain.setValueAtTime(.1,now+i*.08);
+        og.gain.exponentialRampToValueAtTime(.001,now+i*.08+.25);
+        o.start(now+i*.08); o.stop(now+i*.08+.3);
+      });
+    } else if(type === 'confetti'){
+      // sparkle shimmer
+      for(let i=0;i<6;i++){
+        const freq = 600+Math.random()*800;
+        const o=ctx.createOscillator(); o.type='sine';
+        const og=ctx.createGain(); o.connect(og); og.connect(ctx.destination);
+        o.frequency.value=freq;
+        og.gain.setValueAtTime(.08,now+i*.04);
+        og.gain.exponentialRampToValueAtTime(.001,now+i*.04+.2);
+        o.start(now+i*.04); o.stop(now+i*.04+.25);
+      }
+    } else if(type === 'levelup'){
+      // classic level-up
+      [262,330,392,523].forEach((f,i)=>{
+        const o=ctx.createOscillator(); o.type='sawtooth';
+        const og=ctx.createGain(); o.connect(og); og.connect(ctx.destination);
+        o.frequency.setValueAtTime(f,now+i*.1);
+        og.gain.setValueAtTime(.12,now+i*.1);
+        og.gain.exponentialRampToValueAtTime(.001,now+i*.1+.4);
+        o.start(now+i*.1); o.stop(now+i*.1+.45);
+      });
+    } else if(type === 'poke'){
+      // cute otter splash
+      const o=ctx.createOscillator(); o.type='sine';
+      o.frequency.setValueAtTime(800,now);
+      o.frequency.exponentialRampToValueAtTime(400,now+.15);
+      o.connect(g); g.gain.setValueAtTime(.12,now);
+      g.gain.exponentialRampToValueAtTime(.001,now+.2);
+      o.start(now); o.stop(now+.22);
+    }
+  } catch(e){ /* audio blocked, ignore */ }
+}
+
+// ── STATE ──
 const DEFAULTS = {
   name:'Jonas', apiKey:'', goal:500,
   totalXP:0, streak:0, lastActiveDay:'',
-  days:{},   // { "2025-06-19": { xp:120, done:3, tasks:[] } }
+  soundOn:true,
+  habits:{ morningTask:0, eveningTask:0, sportDays:0, hardTasksTotal:0, longestStreak:0 },
+  days:{},
   tasks:[
-    {id:1,title:'Steuererklärung abschicken',diff:'hard', xp:300,repeat:'once',doneOn:''},
-    {id:2,title:'Arzttermin vereinbaren',    diff:'medium',xp:75, repeat:'once',doneOn:''},
-    {id:3,title:'Keller aufräumen',          diff:'medium',xp:75, repeat:'once',doneOn:''},
-    {id:4,title:'10 Min Spaziergang',        diff:'easy',  xp:15, repeat:'daily',doneOn:''},
+    {id:1,title:'Steuererklärung abschicken',diff:'hard', xp:300,repeat:'once',doneOn:'',created:Date.now()},
+    {id:2,title:'Arzttermin vereinbaren',    diff:'medium',xp:75, repeat:'once',doneOn:'',created:Date.now()},
+    {id:3,title:'Keller aufräumen',          diff:'medium',xp:75, repeat:'once',doneOn:'',created:Date.now()},
+    {id:4,title:'10 Min Spaziergang',        diff:'easy',  xp:15, repeat:'daily',doneOn:'',created:Date.now()},
   ],
   checkinDay:''
 };
 
-let S = JSON.parse(localStorage.getItem('rufus2') || 'null') || JSON.parse(JSON.stringify(DEFAULTS));
+let S = (() => {
+  try { return JSON.parse(localStorage.getItem('otto_v3') || 'null') || JSON.parse(JSON.stringify(DEFAULTS)); }
+  catch(e) { return JSON.parse(JSON.stringify(DEFAULTS)); }
+})();
+// Migrate missing fields
+if(!S.soundOn) S.soundOn = true;
+if(!S.habits) S.habits = DEFAULTS.habits;
 
-function save(){ localStorage.setItem('rufus2', JSON.stringify(S)); }
+function save(){ try{ localStorage.setItem('otto_v3', JSON.stringify(S)); }catch(e){} }
+
+// ── DATE UTILS ──
+const todayKey = () => new Date().toISOString().slice(0,10);
+const fmtDate  = d => new Date(d+'T12:00:00').toLocaleDateString('de-DE',{weekday:'short',day:'numeric',month:'short'});
 
 // ── DAILY RESET ──
-// Tasks marked done on a previous day get reset (for recurring) or left as archived
 function dailyReset(){
   const today = todayKey();
   S.tasks.forEach(t => {
-    if(t.doneOn && t.doneOn !== today){
-      if(t.repeat === 'daily') { t.doneOn = ''; } // reset daily tasks
-      // once/weekly/monthly stay as done but we still show them (greyed)
-    }
+    if(t.doneOn && t.doneOn !== today && t.repeat === 'daily') t.doneOn = '';
   });
-  // Update streak
+  // streak check
   const yesterday = new Date(); yesterday.setDate(yesterday.getDate()-1);
   const yKey = yesterday.toISOString().slice(0,10);
-  if(S.lastActiveDay === today){ /* already counted */ }
-  else if(S.lastActiveDay === yKey){ /* keep streak */ }
-  else if(S.lastActiveDay && S.lastActiveDay !== today){ S.streak = 0; }
+  if(S.lastActiveDay && S.lastActiveDay !== today && S.lastActiveDay !== yKey) S.streak = 0;
   save();
 }
 
 // ── TODAY XP ──
-function todayXP(){
-  const d = S.days[todayKey()];
-  return d ? d.xp : 0;
-}
-function todayDoneCount(){
-  const d = S.days[todayKey()];
-  return d ? d.done : 0;
-}
-function addTodayXP(amount){
-  const k = todayKey();
-  if(!S.days[k]) S.days[k] = {xp:0,done:0,tasks:[]};
+function todayXP(){ const d=S.days[todayKey()]; return d?d.xp:0; }
+function todayDone(){ const d=S.days[todayKey()]; return d?d.done:0; }
+
+function addTodayXP(amount, diff){
+  const k=todayKey();
+  if(!S.days[k]) S.days[k]={xp:0,done:0,tasks:[]};
   S.days[k].xp += amount;
   S.days[k].done++;
   S.totalXP += amount;
-  // streak
   if(S.lastActiveDay !== k){
-    const yesterday = new Date(); yesterday.setDate(yesterday.getDate()-1);
-    const yKey = yesterday.toISOString().slice(0,10);
-    if(S.lastActiveDay === yKey || !S.lastActiveDay) S.streak++;
-    else if(S.lastActiveDay !== k) S.streak = 1;
-    S.lastActiveDay = k;
+    const yesterday=new Date(); yesterday.setDate(yesterday.getDate()-1);
+    const yKey=yesterday.toISOString().slice(0,10);
+    S.streak = (S.lastActiveDay===yKey||!S.lastActiveDay) ? S.streak+1 : 1;
+    S.lastActiveDay=k;
+    if(S.streak>S.habits.longestStreak) S.habits.longestStreak=S.streak;
   }
+  // habit tracking
+  const h = new Date().getHours();
+  if(h<12) S.habits.morningTask++;
+  else if(h>=18) S.habits.eveningTask++;
+  if(diff==='hard') S.habits.hardTasksTotal++;
   save();
 }
 function removeTodayXP(amount){
-  const k = todayKey();
+  const k=todayKey();
   if(!S.days[k]) return;
-  S.days[k].xp = Math.max(0, S.days[k].xp - amount);
-  S.days[k].done = Math.max(0, S.days[k].done - 1);
-  S.totalXP = Math.max(0, S.totalXP - amount);
+  S.days[k].xp=Math.max(0,S.days[k].xp-amount);
+  S.days[k].done=Math.max(0,S.days[k].done-1);
+  S.totalXP=Math.max(0,S.totalXP-amount);
   save();
+}
+
+// ── URGENCY ──
+// Returns '' | 'urgent-low' | 'urgent-mid' | 'urgent-high'
+function getUrgency(task){
+  if(task.doneOn===todayKey()) return '';
+  const now = new Date();
+  const h = now.getHours();
+  const dow = now.getDay(); // 0=Sun,6=Sat
+
+  if(task.repeat==='daily'){
+    if(h>=21) return 'urgent-high';
+    if(h>=18) return 'urgent-mid';
+    if(h>=15) return 'urgent-low';
+  } else if(task.repeat==='weekly'){
+    // end of week = Fri/Sat/Sun
+    if(dow===0||dow===6||(dow===5&&h>=18)) return 'urgent-high';
+    if(dow===5||(dow===4&&h>=18)) return 'urgent-mid';
+    if(dow===4) return 'urgent-low';
+  } else if(task.repeat==='monthly'){
+    const daysLeft = new Date(now.getFullYear(),now.getMonth()+1,0).getDate() - now.getDate();
+    if(daysLeft<=1) return 'urgent-high';
+    if(daysLeft<=3) return 'urgent-mid';
+    if(daysLeft<=5) return 'urgent-low';
+  }
+  return '';
 }
 
 // ── NAV ──
@@ -530,199 +611,179 @@ function nav(name, btn){
 
 // ── HEADER ──
 function updateHeader(){
-  document.getElementById('topName').textContent = (S.name||'Jonas') + ' 👋';
-  const xp = todayXP();
-  const goal = S.goal || 500;
-  const pct = Math.min(100, Math.round(xp/goal*100));
-  document.getElementById('xpFill').style.width = pct+'%';
-  document.getElementById('xpLabel').textContent = xp + ' XP heute';
-  // date
-  const now = new Date();
-  document.getElementById('topDate').textContent = now.toLocaleDateString('de-DE',{weekday:'short',day:'numeric',month:'short'});
+  document.getElementById('topName').textContent=(S.name||'Jonas')+' 👋';
+  document.getElementById('topDate').textContent=new Date().toLocaleDateString('de-DE',{weekday:'short',day:'numeric',month:'short'});
+  const xp=todayXP(), goal=S.goal||500;
+  document.getElementById('xpFill').style.width=Math.min(100,Math.round(xp/goal*100))+'%';
+  document.getElementById('xpLabel').textContent=xp+' XP heute';
+  updateOttoMood();
 }
 
-// ── TASKS ──
-function isDoneToday(t){ return t.doneOn === todayKey(); }
+// ── OTTO MOOD ──
+function updateOttoMood(){
+  const xp=todayXP(), goal=S.goal||500, ratio=xp/goal;
+  const moods=['😴','🙂','😊','😄','🤩'];
+  const idx=ratio<.1?0:ratio<.3?1:ratio<.6?2:ratio<.9?3:4;
+  document.getElementById('ottoMood').textContent=moods[idx];
+}
+
+// ── OTTO MESSAGES ──
+const OTTO_IDLE=[
+  n=>`${n}, ich hab dich heute im Auge. Im positiven Sinne. 🦦`,
+  n=>`Ottos Lieblingstatsache: Auch ein fauler Tag mit einer Aufgabe ist ein guter Tag.`,
+  n=>`Weißt du was Otter machen wenn sie schlafen? Sie halten sich an den Händen damit sie nicht wegtreiben. Genauso hält Otto dich auf Kurs! 🦦`,
+  n=>`${n}, die Steuer macht sich leider immer noch nicht selbst. Aber du weißt das ja schon.`,
+  n=>`Kleiner Otter-Tipp: Fang mit der nervigsten Aufgabe an. Danach fühlt sich alles leichter an.`,
+  n=>`Ich habe ${Math.floor(Math.random()*3)+1} Fische gefangen heute. Du kannst auch was schaffen! 🐟`,
+  n=>`${n}, dein zukünftiges Ich schickt dir ein Dankeschön. Und einen Fisch. 🐟`,
+];
+const OTTO_DONE=[
+  t=>`JA! "${t.slice(0,22)}" ist erledigt! Otto macht Freudensprünge! 🦦💦`,
+  t=>`Boom! Dein zukünftiges Ich klatscht gerade in die Hände!`,
+  t=>`"${t.slice(0,20)}" — abhaken! Das ist echter Fortschritt, ${S.name||'Jonas'}!`,
+  t=>`Siehst du? Du KANNST das. Otto hat's immer gewusst. 🦦`,
+  t=>`Noch eine und Otto dreht komplett durch vor Stolz. Keine Drohung, ein Versprechen.`,
+];
+
+function setOtto(msg){
+  const b=document.getElementById('ottoBubble');
+  b.style.opacity='0';
+  setTimeout(()=>{b.textContent=msg; b.style.opacity='1';},200);
+}
+function pokeOtto(){
+  const msgs=OTTO_IDLE;
+  setOtto(msgs[Math.floor(Math.random()*msgs.length)](S.name||'Jonas'));
+  const av=document.getElementById('ottoAvatar');
+  av.style.transform='scale(1.2) rotate(-12deg)';
+  setTimeout(()=>av.style.transform='',280);
+  playSound('poke');
+}
+
+// ── TASK RENDER ──
+const DIFF_LABELS={easy:{label:'😌 Leicht',cls:'chip-easy'},medium:{label:'💪 Mittel',cls:'chip-medium'},hard:{label:'🔥 Unangenehm',cls:'chip-hard'}};
+const REPEAT_LABELS={daily:'täglich',weekly:'wöchentlich',monthly:'monatlich'};
 
 function renderTasks(){
-  const list = document.getElementById('taskList');
-  const DIFF = { easy:{label:'😌 Leicht',cls:'diff-easy'}, medium:{label:'💪 Mittel',cls:'diff-medium'}, hard:{label:'🔥 Unangenehm',cls:'diff-hard'} };
+  const list=document.getElementById('taskList');
+  const today=todayKey();
+  const active=S.tasks.filter(t=>t.doneOn!==today);
+  const done  =S.tasks.filter(t=>t.doneOn===today);
+  const ordered=[...active,...done];
 
-  // Split: active first, done at bottom
-  const active = S.tasks.filter(t=>!isDoneToday(t));
-  const done   = S.tasks.filter(t=>isDoneToday(t));
-  const ordered = [...active,...done];
-
-  if(ordered.length===0){
-    list.innerHTML=`<div class="empty-state"><div class="empty-emoji">🎉</div><div class="empty-text">Alles erledigt!</div><div class="empty-sub">Rufus ist begeistert von dir.</div></div>`;
+  if(!ordered.length){
+    list.innerHTML=`<div class="empty-state"><div class="empty-emoji">🦦</div><div class="empty-text">Alles erledigt!</div><div class="empty-sub">Otto ist außer sich vor Freude.</div></div>`;
     return;
   }
   list.innerHTML='';
   ordered.forEach(t=>{
-    const doneToday = isDoneToday(t);
-    const diff = DIFF[t.diff]||DIFF.medium;
-    const card = document.createElement('div');
-    card.className='task-card'+(doneToday?' done':'');
+    const doneToday=t.doneOn===today;
+    const urgency=doneToday?'':getUrgency(t);
+    const d=DIFF_LABELS[t.diff]||DIFF_LABELS.medium;
+    const card=document.createElement('div');
+    card.className='task-card'+(doneToday?' done':'')+(urgency?' '+urgency:'');
     card.dataset.id=t.id;
     card.innerHTML=`
       <div class="check-ring${doneToday?' on':''}" onclick="toggleTask(${t.id},event)"></div>
       <div class="task-body" onclick="toggleTask(${t.id},event)">
         <div class="task-title">${t.title}</div>
-        <span class="task-diff ${diff.cls}">${diff.label}</span>
-        ${t.repeat!=='once'?`<span class="task-diff diff-easy" style="margin-left:4px">${t.repeat==='daily'?'täglich':t.repeat==='weekly'?'wöchentlich':'monatlich'}</span>`:''}
+        <div class="task-meta">
+          <span class="chip ${d.cls}">${d.label}</span>
+          ${t.repeat!=='once'?`<span class="chip chip-repeat">${REPEAT_LABELS[t.repeat]||t.repeat}</span>`:''}
+          ${urgency==='urgent-high'?'<span class="chip chip-urgent">⚠️ Heute noch!</span>':urgency==='urgent-mid'?'<span class="chip" style="background:var(--coral-xl);color:var(--coral-l)">Bald!</span>':''}
+        </div>
       </div>
       <div class="xp-badge">+${t.xp} XP</div>
-      <button class="delete-btn" onclick="deleteTask(${t.id},event)" title="Löschen">×</button>`;
+      <button class="del-btn" onclick="deleteTask(${t.id},event)">×</button>`;
     list.appendChild(card);
   });
 }
 
-function toggleTask(id, e){
-  e && e.stopPropagation();
-  const t = S.tasks.find(x=>x.id===id);
+function toggleTask(id,e){
+  e&&e.stopPropagation();
+  const t=S.tasks.find(x=>x.id===id);
   if(!t) return;
-  if(!isDoneToday(t)){
-    t.doneOn = todayKey();
-    addTodayXP(t.xp);
-    // track in day log
-    const k = todayKey();
+  const today=todayKey();
+  if(t.doneOn!==today){
+    t.doneOn=today;
+    addTodayXP(t.xp,t.diff);
+    const k=today;
     if(!S.days[k].tasks) S.days[k].tasks=[];
     S.days[k].tasks.push({title:t.title,diff:t.diff,xp:t.xp});
-    save();
-    renderTasks(); updateHeader();
+    save(); renderTasks(); updateHeader();
     confetti();
-    setRufus(RUFUS_DONE[Math.floor(Math.random()*RUFUS_DONE.length)](t.title));
-    if(t.xp>=200) setTimeout(()=>showAch('💪','Heldenmut!','Unangenehme Aufgabe erledigt!'),600);
-    else if(todayDoneCount()%5===0 && todayDoneCount()>0) setTimeout(()=>showAch('🎯',todayDoneCount()+' erledigt!','Du bist im Flow!'),600);
-    if(Math.random()<0.2) setTimeout(()=>showAch('🎁','Überraschung!','Rufus schickt dir einen Glücks-Stoß! 🦊'),1400);
+    playSound('done_'+t.diff);
+    setOtto(OTTO_DONE[Math.floor(Math.random()*OTTO_DONE.length)](t.title));
+    if(t.xp>=200) setTimeout(()=>{showAch('💪','Heldenmut!','Unangenehme Aufgabe erledigt! 🦦');playSound('levelup');},700);
+    else if(todayDone()%5===0&&todayDone()>0) setTimeout(()=>{showAch('🎯',todayDone()+' erledigt!','Du bist im Flow!');playSound('confetti');},700);
+    if(Math.random()<0.18) setTimeout(()=>{showAch('🦦','Otter-Bonus!','Otto schenkt dir extra Motivation!');playSound('confetti');},1500);
   } else {
     t.doneOn='';
     removeTodayXP(t.xp);
-    renderTasks(); updateHeader();
+    save(); renderTasks(); updateHeader();
   }
 }
 
-function deleteTask(id, e){
-  e && e.stopPropagation();
-  const card = document.querySelector(`.task-card[data-id="${id}"]`);
-  if(card){ card.classList.add('removing'); }
-  setTimeout(()=>{
-    S.tasks = S.tasks.filter(x=>x.id!==id);
-    save(); renderTasks();
-  }, 300);
+function deleteTask(id,e){
+  e&&e.stopPropagation();
+  const card=document.querySelector(`.task-card[data-id="${id}"]`);
+  if(card) card.classList.add('removing');
+  setTimeout(()=>{S.tasks=S.tasks.filter(x=>x.id!==id);save();renderTasks();},300);
 }
 
 // ── MODAL ──
-function openModal(){
-  // Show server note if running from file://
-  document.getElementById('serverNote').style.display = 'none';
-  document.getElementById('addModal').classList.add('open');
-  setTimeout(()=>document.getElementById('taskInput').focus(),120);
-}
-function closeModal(){
-  document.getElementById('addModal').classList.remove('open');
-  document.getElementById('taskInput').value='';
-}
+function openModal(){ document.getElementById('addModal').classList.add('open'); setTimeout(()=>document.getElementById('taskInput').focus(),120); }
+function closeModal(){ document.getElementById('addModal').classList.remove('open'); document.getElementById('taskInput').value=''; }
 const DIFF_XP={easy:15,medium:75,hard:300};
 function addTask(){
   const title=document.getElementById('taskInput').value.trim();
   if(!title){showToast('Bitte Aufgabe eingeben!');return;}
-  S.tasks.unshift({id:Date.now(),title,diff:document.getElementById('taskDiff').value,xp:DIFF_XP[document.getElementById('taskDiff').value],repeat:document.getElementById('taskRepeat').value,doneOn:''});
-  save(); renderTasks(); closeModal(); showToast('Aufgabe hinzugefügt ✓');
+  S.tasks.unshift({id:Date.now(),title,diff:document.getElementById('taskDiff').value,xp:DIFF_XP[document.getElementById('taskDiff').value],repeat:document.getElementById('taskRepeat').value,doneOn:'',created:Date.now()});
+  save();renderTasks();closeModal();showToast('Aufgabe hinzugefügt ✓');
 }
 
 // ── VOICE ──
-let recog=null, listening=false;
+let recog=null,listening=false;
 function toggleVoice(){
-
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
   if(!SR){showToast('Spracherkennung nicht unterstützt');return;}
   if(listening){recog&&recog.stop();return;}
   recog=new SR(); recog.lang='de-DE'; recog.continuous=false; recog.interimResults=false;
-  recog.onstart=()=>{
-    listening=true;
-    document.getElementById('voiceBtn').classList.add('listening');
-    document.getElementById('voiceHint').textContent='🎤 Ich höre zu...';
-    document.getElementById('voiceHint').classList.add('active');
-  };
-  recog.onresult=(e)=>{
-    const txt=e.results[0][0].transcript;
-    document.getElementById('taskInput').value=txt;
-    autoDetectDiff(txt);
-  };
-  recog.onend=()=>{
-    listening=false;
-    document.getElementById('voiceBtn').classList.remove('listening');
-    document.getElementById('voiceHint').textContent='Per Mikrofon diktieren oder unten tippen';
-    document.getElementById('voiceHint').classList.remove('active');
-  };
-  recog.onerror=(ev)=>{
-    listening=false;
-    document.getElementById('voiceBtn').classList.remove('listening');
-    document.getElementById('voiceHint').textContent='Fehler: '+ev.error+' — nochmal versuchen';
-  };
+  recog.onstart=()=>{listening=true;document.getElementById('voiceBtn').classList.add('listening');document.getElementById('voiceHint').textContent='🎤 Ich höre zu...';document.getElementById('voiceHint').classList.add('active');};
+  recog.onresult=e=>{const txt=e.results[0][0].transcript;document.getElementById('taskInput').value=txt;autoDetect(txt);};
+  recog.onend=()=>{listening=false;document.getElementById('voiceBtn').classList.remove('listening');document.getElementById('voiceHint').textContent='Diktieren oder unten tippen';document.getElementById('voiceHint').classList.remove('active');};
+  recog.onerror=ev=>{listening=false;document.getElementById('voiceBtn').classList.remove('listening');document.getElementById('voiceHint').textContent='Fehler: '+ev.error;};
   recog.start();
 }
-function autoDetectDiff(txt){
+function autoDetect(txt){
   const l=txt.toLowerCase();
-  if(l.includes('steuer')||l.includes('behörde')||l.includes('amt')||l.includes('versicherung')) document.getElementById('taskDiff').value='hard';
-  else if(l.includes('arzt')||l.includes('zahnarzt')||l.includes('telefon')) document.getElementById('taskDiff').value='medium';
+  if(l.includes('steuer')||l.includes('behörde')||l.includes('versicherung')||l.includes('amt')) document.getElementById('taskDiff').value='hard';
+  else if(l.includes('arzt')||l.includes('zahnarzt')||l.includes('telefon')||l.includes('anruf')) document.getElementById('taskDiff').value='medium';
   if(l.includes('täglich')||l.includes('jeden tag')) document.getElementById('taskRepeat').value='daily';
-  if(l.includes('wöchentlich')||l.includes('nächste woche')) document.getElementById('taskRepeat').value='weekly';
+  else if(l.includes('wöchentlich')||l.includes('nächste woche')) document.getElementById('taskRepeat').value='weekly';
 }
 
-// ── RUFUS ──
-const RUFUS_IDLE=[
-  'Ich glaube fest an dich! Auch wenn du das gerade vielleicht nicht tust. 🐾',
-  'Kleiner Tipp: Der schwierigste Schritt ist immer der erste.',
-  'Dein zukünftiges Ich schickt dir ein Dankeschön. Von dir zu dir. 💌',
-  'Auch kleine Schritte zählen. Du bist schon weiter als gestern!',
-  'Rufus-Wissenschaft: Jede erledigte Aufgabe macht den nächsten Tag besser.',
-  'Ich tanze hier drinnen schon vor Vorfreude! 🦊',
-];
-const RUFUS_DONE=[
-  t=>`JA! "${t}" ist Geschichte! 🎉`,
-  t=>`Boom! "${t.slice(0,24)}" — check! Dein zukünftiges Ich applaudiert! 👏`,
-  t=>`Das war mutig. Respekt! 🦊`,
-  t=>`Siehst du? Du kannst das! +XP für dich! 🏆`,
-];
-function setRufus(msg){
-  const b=document.getElementById('rufusBubble');
-  b.style.opacity='0';
-  setTimeout(()=>{b.textContent=msg;b.style.opacity='1';},180);
-}
-function pokeRufus(){
-  setRufus(RUFUS_IDLE[Math.floor(Math.random()*RUFUS_IDLE.length)]);
-  document.querySelector('.rufus-btn').style.transform='scale(1.2) rotate(10deg)';
-  setTimeout(()=>document.querySelector('.rufus-btn').style.transform='',250);
-}
-
-// ── SCORE SCREEN ──
+// ── SCORE ──
 function renderScore(){
-  const xp=todayXP();
-  const goal=S.goal||500;
+  const xp=todayXP(),goal=S.goal||500;
   document.getElementById('scoreNum').textContent=xp;
-  document.getElementById('scoreDate').textContent=fmtDate(new Date());
+  document.getElementById('scoreDate').textContent=new Date().toLocaleDateString('de-DE',{weekday:'long',day:'numeric',month:'long'});
   document.getElementById('scoreBarPct').textContent=xp+' / '+goal+' XP';
   document.getElementById('scoreBarFill').style.width=Math.min(100,Math.round(xp/goal*100))+'%';
-  document.getElementById('statDone').textContent=todayDoneCount();
+  document.getElementById('statDone').textContent=todayDone();
   document.getElementById('statStreak').textContent=S.streak+' 🔥';
   document.getElementById('statTotal').textContent=S.totalXP;
-  // History
   const hist=document.getElementById('historyList');
   const keys=Object.keys(S.days).sort((a,b)=>b.localeCompare(a)).slice(0,7);
-  if(!keys.length){hist.innerHTML='<div style="color:var(--text3);font-size:14px;font-family:var(--font2)">Noch keine Daten.</div>';return;}
+  if(!keys.length){hist.innerHTML='<div style="color:var(--text3);font-size:14px;font-family:var(--font2)">Noch keine Tage gespeichert.</div>';return;}
   hist.innerHTML=keys.map(k=>{
-    const d=S.days[k];
-    const pct=Math.min(100,Math.round((d.xp||0)/goal*100));
-    const isToday=k===todayKey();
-    return `<div style="background:var(--card);border:1px solid var(--border);border-radius:var(--r-sm);padding:12px 14px;margin-bottom:8px">
+    const d=S.days[k],pct=Math.min(100,Math.round((d.xp||0)/goal*100)),isToday=k===todayKey();
+    return `<div class="hist-item">
       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
         <span style="font-size:14px;font-weight:700">${isToday?'Heute':fmtDate(k)}</span>
         <span style="font-size:14px;font-weight:800;color:var(--amber-d)">${d.xp||0} XP</span>
       </div>
       <div style="height:5px;background:var(--border);border-radius:3px;overflow:hidden">
-        <div style="height:100%;width:${pct}%;background:linear-gradient(90deg,var(--teal-l),var(--teal));border-radius:3px;transition:width .5s"></div>
+        <div style="height:100%;width:${pct}%;background:linear-gradient(90deg,var(--teal-l),var(--teal));border-radius:3px"></div>
       </div>
       <div style="font-size:11px;color:var(--text3);margin-top:4px;font-family:var(--font2)">${d.done||0} Aufgabe${(d.done||0)!==1?'n':''} erledigt</div>
     </div>`;
@@ -730,51 +791,53 @@ function renderScore(){
 }
 
 // ── CHECK-IN ──
-let ciMood='', ciData={};
+let ciMood='',ciData={};
 function pickMood(el){document.querySelectorAll('.mood-opt').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');ciMood=el.dataset.v;}
 function pickOpt(el){document.querySelectorAll(`.ci-opt[data-g="${el.dataset.g}"]`).forEach(x=>x.classList.remove('sel'));el.classList.add('sel');ciData[el.dataset.g]=el.dataset.v;}
 function submitCheckin(){
-  if(S.checkinDay===todayKey()){showToast('Heute schon gemacht 🌙');return;}
+  if(S.checkinDay===todayKey()){showToast('Heute schon erledigt 🌙');return;}
   S.checkinDay=todayKey();
-  addTodayXP(50);
-  save(); updateHeader();
+  addTodayXP(50,'easy');
+  if(ciData.sport==='much') S.habits.sportDays=(S.habits.sportDays||0)+1;
+  save();updateHeader();
   document.getElementById('ciForm').style.display='none';
   document.getElementById('ciDone').style.display='block';
-  confetti(); showAch('🌙','Check-in gemacht!','+50 XP');
+  confetti();playSound('done_medium');showAch('🌙','Check-in gemacht!','+50 XP für dich!');
 }
 
 // ── RECAP ──
 async function generateRecap(){
   const today=todayKey();
-  const day=S.days[today];
   const doneTasks=S.tasks.filter(t=>t.doneOn===today);
   const name=S.name||'Jonas';
+  const xp=todayXP();
 
-  if(doneTasks.length===0 && (!day||day.xp===0)){
-    document.getElementById('recapText').textContent=`${name}, heute war vielleicht kein Mega-Tag — und das ist völlig okay. Morgen ist eine neue Chance. Rufus glaubt an dich! 🦊`;
+  if(doneTasks.length===0&&xp===0){
+    document.getElementById('recapText').textContent=`${name}, heute lief es vielleicht nicht wie geplant — aber weißt du was? Otto hat auch manchmal Tage wo er einfach nur auf einem Stein sitzt. Morgen ist neu. 🦦`;
     return;
   }
-  const xp=todayXP();
   document.getElementById('xpTodayNum').textContent='+'+xp+' XP';
   document.getElementById('xpTodayBox').style.display='block';
   document.getElementById('donePanelItems').innerHTML=doneTasks.map(t=>`<div class="done-row">${t.title}</div>`).join('');
   document.getElementById('donePanel').style.display='block';
 
   if(!S.apiKey){
-    document.getElementById('recapText').textContent=`${name}, heute hast du ${doneTasks.length} Aufgabe${doneTasks.length!==1?'n':''} erledigt und ${xp} XP gesammelt.${doneTasks.some(t=>t.diff==='hard')?' Besonders mutig: du hast eine unangenehme Aufgabe angepackt.':''} Rufus ist stolz! 🦊\n\n(API Key in Einstellungen eintragen für persönlichere Texte)`;
+    document.getElementById('recapText').textContent=`${name}, ${xp} XP heute — das ist solide! ${doneTasks.some(t=>t.diff==='hard')?'Und eine unangenehme Aufgabe angepackt — das ist echter Mut.':''} Otto ist stolz! 🦦\n\n(API Key in Einstellungen für persönliche Texte von Otto)`;
     return;
   }
 
-
-  document.getElementById('recapText').innerHTML=`<span style="display:flex;align-items:center;gap:8px;font-family:var(--font2)">Rufus schreibt<span class="dots"><span></span><span></span><span></span></span></span>`;
+  document.getElementById('recapText').innerHTML=`<span style="display:flex;align-items:center;gap:8px;font-family:var(--font2)">Otto schreibt<span class="dots"><span></span><span></span><span></span></span></span>`;
   document.getElementById('recapBtn').disabled=true;
 
-  const doneDesc=doneTasks.map(t=>`"${t.title}" (${t.diff==='hard'?'unangenehm — sehr mutig':t.diff==='medium'?'mittelschwer':'leicht'})`).join(', ');
-  const prompt=`Du bist Rufus, ein liebevoller Fuchs-Begleiter in einer App für Menschen mit Prokrastination.
-Schreibe einen persönlichen Tagesabschluss für ${name}.
-Heute erledigt: ${doneDesc||'nichts, aber der Check-in wurde gemacht'}. Gesamt heute: ${xp} XP.
-${ciMood?'Stimmung des Tages: '+ciMood+'.':''}
-Regeln: konkret loben (keine generischen Floskeln), unangenehme Aufgaben besonders würdigen, warm & persönlich, kein schlechtes Gewissen, max 4 Sätze, Deutsch, direkt an ${name} gerichtet.`;
+  // Build habit context for Claude
+  const h=S.habits||{};
+  const habitCtx=`Gewohnheiten von ${name}: Liebt Morgenaufgaben (${h.morningTask||0}x), erledigt unangenehme Aufgaben ${h.hardTasksTotal||0}x, aktueller Streak ${S.streak} Tage, längster Streak ${h.longestStreak||0} Tage, Sport-Tage im Check-in ${h.sportDays||0}.`;
+
+  const doneDesc=doneTasks.map(t=>`"${t.title}" (${t.diff==='hard'?'unangenehm — sehr mutig':t.diff==='medium'?'mittelschwer':'leicht'})`).join(', ')||'nichts, aber Check-in gemacht';
+  const prompt=`Du bist Otto, ein frecher, liebevoller Otter in einer Prokrastinations-App. Du kennst ${name} gut.
+${habitCtx}
+Heute erledigt: ${doneDesc}. Gesamt: ${xp} XP. Stimmung: ${ciMood||'unbekannt'}.
+Schreib einen Tagesabschluss: konkret, persönlich, frech aber liebevoll. Erwähne spezifische Aufgaben. Unangenehmes besonders würdigen. Max 4 Sätze. Deutsch. Direkt an ${name} gerichtet. Manchmal einen Otter-Witz oder Fisch-Metapher einbauen. Kein schlechtes Gewissen.`;
 
   try{
     const res=await fetch('https://api.anthropic.com/v1/messages',{
@@ -784,8 +847,8 @@ Regeln: konkret loben (keine generischen Floskeln), unangenehme Aufgaben besonde
     });
     const data=await res.json();
     if(data.error) throw new Error(data.error.message);
-    document.getElementById('recapText').textContent=data.content?.find(c=>c.type==='text')?.text||'Rufus ist gerade kurz schläfrig... 🦊';
-    confetti();
+    document.getElementById('recapText').textContent=data.content?.find(c=>c.type==='text')?.text||'Otto ist kurz unter Wasser. Aber er ist stolz auf dich! 🦦';
+    confetti();playSound('levelup');
   }catch(err){
     document.getElementById('recapText').textContent='Fehler: '+err.message;
   }
@@ -797,55 +860,60 @@ function loadSettings(){
   document.getElementById('nameInp').value=S.name||'';
   document.getElementById('goalInp').value=S.goal||500;
   document.getElementById('apiKeyInp').value=S.apiKey||'';
+  document.getElementById('soundToggle').className='toggle'+(S.soundOn?' on':'');
 }
 function saveSettings(){
   S.name=document.getElementById('nameInp').value.trim()||'Jonas';
   S.goal=parseInt(document.getElementById('goalInp').value)||500;
   S.apiKey=document.getElementById('apiKeyInp').value.trim();
-  save(); updateHeader(); showToast('Gespeichert ✓');
+  save();updateHeader();showToast('Gespeichert ✓');
+}
+function toggleSound(){
+  S.soundOn=!S.soundOn;
+  document.getElementById('soundToggle').className='toggle'+(S.soundOn?' on':'');
+  save();
+  if(S.soundOn) playSound('poke');
 }
 async function testApiKey(){
   const key=document.getElementById('apiKeyInp').value.trim();
   if(!key){showToast('Kein API Key eingetragen');return;}
-
-  document.getElementById('apiTestResult').textContent='Teste...';
+  const btn=document.getElementById('testBtn');
+  btn.textContent='Teste...';btn.disabled=true;
   try{
     const res=await fetch('https://api.anthropic.com/v1/messages',{
       method:'POST',
       headers:{'Content-Type':'application/json','x-api-key':key,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
-      body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:20,messages:[{role:'user',content:'Sag hallo auf Deutsch.'}]})
+      body:JSON.stringify({model:'claude-sonnet-4-6',max_tokens:20,messages:[{role:'user',content:'Sag hallo.'}]})
     });
     const d=await res.json();
     if(d.error) throw new Error(d.error.message);
-    document.getElementById('apiTestResult').textContent='✅ Verbindung OK!';
-    showToast('API Key funktioniert ✓');
+    btn.textContent='✅ Verbindung OK!';showToast('API Key funktioniert ✓');playSound('done_medium');
   }catch(e){
-    document.getElementById('apiTestResult').textContent='❌ '+e.message;
+    btn.textContent='❌ '+e.message.slice(0,40);
   }
+  setTimeout(()=>{btn.textContent='🧪 API Key testen';btn.disabled=false;},3000);
 }
 function exportData(){
   const blob=new Blob([JSON.stringify(S,null,2)],{type:'application/json'});
   const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');a.href=url;a.download='rufus_daten.json';a.click();URL.revokeObjectURL(url);
+  const a=document.createElement('a');a.href=url;a.download='otto_daten.json';a.click();URL.revokeObjectURL(url);
 }
-function clearAll(){localStorage.removeItem('rufus2');S=JSON.parse(JSON.stringify(DEFAULTS));save();renderTasks();updateHeader();showToast('Zurückgesetzt.');}
+function clearAll(){localStorage.removeItem('otto_v3');S=JSON.parse(JSON.stringify(DEFAULTS));save();renderTasks();updateHeader();loadSettings();showToast('Zurückgesetzt.');}
 
 // ── CONFETTI ──
 function confetti(){
   const layer=document.getElementById('confetti-layer');
-  const colors=['#FAC775','#AFA9EC','#5DCAA5','#ED93B1','#F0997B','#97C459','#EF9F27','#7F77DD'];
-  for(let i=0;i<36;i++){
+  const colors=['#FAC775','#89C0E8','#5DCAA5','#ED93B1','#F0997B','#97C459','#EF9F27','#5B9BD5'];
+  for(let i=0;i<34;i++){
     const p=document.createElement('div');p.className='cbit';
     p.style.cssText=`left:${Math.random()*100}%;top:-12px;background:${colors[Math.floor(Math.random()*colors.length)]};border-radius:${Math.random()>.4?'50%':'2px'};animation-duration:${1.2+Math.random()}s;animation-delay:${Math.random()*.5}s`;
     layer.appendChild(p);setTimeout(()=>p.remove(),2500);
   }
 }
 
-// ── TOAST ──
+// ── TOAST / ACHIEVEMENT ──
 let toastT;
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2800);}
-
-// ── ACHIEVEMENT ──
 let achT;
 function showAch(emoji,title,sub){
   document.getElementById('ach-emoji').textContent=emoji;
@@ -860,19 +928,23 @@ dailyReset();
 updateHeader();
 renderTasks();
 loadSettings();
+if(S.checkinDay===todayKey()){document.getElementById('ciForm').style.display='none';document.getElementById('ciDone').style.display='block';}
 
-// Check-in state
-if(S.checkinDay===todayKey()){
-  document.getElementById('ciForm').style.display='none';
-  document.getElementById('ciDone').style.display='block';
-}
-
-// Tageszeit-Begrüßung
+// Tageszeit-Gruss
 setTimeout(()=>{
   const h=new Date().getHours();
-  const msgs=['Guten Morgen! Ein neuer Tag, neue Chancen! ☀️','Hey! Mittag ist ein guter Zeitpunkt für eine Aufgabe 🌞','Guter Nachmittag! Was schaffst du heute noch? 🦊','Guten Abend! Vergiss den Check-in nicht 🌙'];
-  setRufus(msgs[h<11?0:h<14?1:h<18?2:3]);
-},1800);
+  const name=S.name||'Jonas';
+  const greetings=[
+    `Guten Morgen, ${name}! Otto war schon beim Fischen. Was machst du als Erstes? ☀️`,
+    `Hey ${name}, schön dass du vorbeischaust. Mittagstief? Ein kleines Häkchen hilft. 🦦`,
+    `${name}! Nachmittag ist Ottos Lieblingszeit. Ein paar Aufgaben noch? 🎯`,
+    `Guten Abend, ${name}. Vergiss den Check-in nicht — Otto wartet schon. 🌙`,
+  ];
+  setOtto(greetings[h<11?0:h<14?1:h<18?2:3]);
+},1500);
+
+// Re-render tasks every 30min (urgency colors update)
+setInterval(()=>renderTasks(), 30*60*1000);
 </script>
 </body>
 </html>
