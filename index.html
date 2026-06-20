@@ -410,7 +410,7 @@ html,body{height:100%;background:var(--bg);font-family:var(--font);color:var(--t
         <div class="settings-sec-title">KI — Anthropic API Key</div>
         <div class="api-row">
           <div class="srow-label" style="font-size:13px;font-weight:700">🔑 API Key</div>
-          <div class="srow-sub" style="font-size:12px;color:var(--text2);font-family:var(--font2);margin-top:2px">Für Rufus' persönliche Nachrichten. Braucht localhost!</div>
+          <div class="srow-sub" style="font-size:12px;color:var(--text2);font-family:var(--font2);margin-top:2px">Für Rufus' persönliche Nachrichten & Tagesabschluss.</div>
           <input class="api-inp" id="apiKeyInp" type="password" placeholder="sk-ant-..." />
         </div>
         <div class="srow" style="cursor:pointer;background:var(--teal-xl)" onclick="testApiKey()">
@@ -446,7 +446,7 @@ html,body{height:100%;background:var(--bg);font-family:var(--font);color:var(--t
 // ── HELPERS ──
 const todayKey = () => new Date().toISOString().slice(0,10); // "2025-06-19"
 const fmtDate = (d) => new Date(d).toLocaleDateString('de-DE',{weekday:'short',day:'numeric',month:'short'});
-const isLocalhost = () => location.protocol === 'http:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+const isLocalhost = () => true; // GitHub Pages & localhost both fine
 
 // ── DEFAULT STATE ──
 const DEFAULTS = {
@@ -615,7 +615,7 @@ function deleteTask(id, e){
 // ── MODAL ──
 function openModal(){
   // Show server note if running from file://
-  document.getElementById('serverNote').style.display = isLocalhost() ? 'none' : 'block';
+  document.getElementById('serverNote').style.display = 'none';
   document.getElementById('addModal').classList.add('open');
   setTimeout(()=>document.getElementById('taskInput').focus(),120);
 }
@@ -634,11 +634,7 @@ function addTask(){
 // ── VOICE ──
 let recog=null, listening=false;
 function toggleVoice(){
-  if(!isLocalhost()){
-    document.getElementById('voiceHint').textContent='⚠️ Braucht localhost — Terminal: python3 -m http.server 8080';
-    document.getElementById('voiceHint').classList.add('active');
-    return;
-  }
+
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
   if(!SR){showToast('Spracherkennung nicht unterstützt');return;}
   if(listening){recog&&recog.stop();return;}
@@ -765,13 +761,10 @@ async function generateRecap(){
   document.getElementById('donePanel').style.display='block';
 
   if(!S.apiKey){
-    document.getElementById('recapText').textContent=`${name}, heute hast du ${doneTasks.length} Aufgabe${doneTasks.length!==1?'n':''} erledigt und ${xp} XP gesammelt.${doneTasks.some(t=>t.diff==='hard')?' Besonders mutig: du hast eine unangenehme Aufgabe angepackt.':''} Rufus ist stolz! 🦊\n\n(API Key in Einstellungen eintragen für persönlichere Texte — braucht localhost)`;
+    document.getElementById('recapText').textContent=`${name}, heute hast du ${doneTasks.length} Aufgabe${doneTasks.length!==1?'n':''} erledigt und ${xp} XP gesammelt.${doneTasks.some(t=>t.diff==='hard')?' Besonders mutig: du hast eine unangenehme Aufgabe angepackt.':''} Rufus ist stolz! 🦊\n\n(API Key in Einstellungen eintragen für persönlichere Texte)`;
     return;
   }
-  if(!isLocalhost()){
-    document.getElementById('recapText').textContent='⚠️ API-Calls brauchen localhost. Terminal:\npython3 -m http.server 8080\nDann http://localhost:8080 öffnen.';
-    return;
-  }
+
 
   document.getElementById('recapText').innerHTML=`<span style="display:flex;align-items:center;gap:8px;font-family:var(--font2)">Rufus schreibt<span class="dots"><span></span><span></span><span></span></span></span>`;
   document.getElementById('recapBtn').disabled=true;
@@ -814,7 +807,7 @@ function saveSettings(){
 async function testApiKey(){
   const key=document.getElementById('apiKeyInp').value.trim();
   if(!key){showToast('Kein API Key eingetragen');return;}
-  if(!isLocalhost()){document.getElementById('apiTestResult').textContent='⚠️ Braucht localhost!';return;}
+
   document.getElementById('apiTestResult').textContent='Teste...';
   try{
     const res=await fetch('https://api.anthropic.com/v1/messages',{
