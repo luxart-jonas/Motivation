@@ -9,15 +9,33 @@
 <title>Otto — dein Otter</title>
 
 <!-- PWA Manifest inline -->
-<link rel="manifest" href="data:application/json,{
-  &quot;name&quot;:&quot;Otto&quot;,
-  &quot;short_name&quot;:&quot;Otto&quot;,
-  &quot;start_url&quot;:&quot;.&quot;,
-  &quot;display&quot;:&quot;standalone&quot;,
-  &quot;background_color&quot;:&quot;%23EAF4FB&quot;,
-  &quot;theme_color&quot;:&quot;%235B9BD5&quot;,
-  &quot;icons&quot;:[{&quot;src&quot;:&quot;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='50' fill='%235B9BD5'/%3E%3Ctext y='.9em' font-size='80' x='10'%3E🦦%3C/text%3E%3C/svg%3E&quot;,&quot;sizes&quot;:&quot;any&quot;,&quot;type&quot;:&quot;image/svg+xml&quot;}]
-}">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAADsQAAA7EB9YPtSQAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZxjeSJQAAAMQSURBVHic7doxCoNAFEXRl7iAhZWlpZWWlt/SxTUkYGMhCBZWFkIgYGGhhYWQhYWQhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhYWFhQ==">
+<script>
+// PWA manifest injected dynamically for GitHub Pages compatibility
+(function(){
+  const iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+    <rect width="512" height="512" rx="112" fill="#5B9BD5"/>
+    <text x="256" y="340" font-size="280" text-anchor="middle" font-family="Apple Color Emoji,Segoe UI Emoji">🦦</text>
+  </svg>`;
+  const iconUrl = 'data:image/svg+xml,' + encodeURIComponent(iconSvg);
+  const manifest = {
+    name: 'Otto — dein Otter',
+    short_name: 'Otto',
+    start_url: location.href,
+    display: 'standalone',
+    background_color: '#EAF4FB',
+    theme_color: '#5B9BD5',
+    icons: [
+      { src: iconUrl, sizes: '512x512', type: 'image/svg+xml', purpose: 'any maskable' }
+    ]
+  };
+  const blob = new Blob([JSON.stringify(manifest)], {type:'application/manifest+json'});
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('link');
+  link.rel = 'manifest'; link.href = url;
+  document.head.appendChild(link);
+})();
+</script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Nunito+Sans:wght@400;600&display=swap" rel="stylesheet">
@@ -277,7 +295,10 @@ html,body{height:100%;background:var(--bg);font-family:var(--font);color:var(--t
   <div class="topbar">
     <div class="topbar-row">
       <div><div class="user-greet">Hallo,</div><div class="user-name" id="topName">Jonas 👋</div></div>
-      <div class="date-pill" id="topDate"></div>
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+        <div class="date-pill" id="topDate"></div>
+        <div style="font-size:12px;color:rgba(255,255,255,0.85);font-weight:700" id="streakDisplay"></div>
+      </div>
     </div>
     <div class="xp-row">
       <div class="xp-bg"><div class="xp-fill" id="xpFill" style="width:0%"></div></div>
@@ -340,9 +361,9 @@ html,body{height:100%;background:var(--bg);font-family:var(--font);color:var(--t
     <div class="ci-sub">Wie war dein Tag, Jonas?</div>
     <div id="ciForm">
       <div class="ci-question"><div class="ci-q">😊 Stimmung?</div><div class="mood-row"><div class="mood-opt" data-v="terrible" onclick="pickMood(this)">😫</div><div class="mood-opt" data-v="bad" onclick="pickMood(this)">😕</div><div class="mood-opt" data-v="ok" onclick="pickMood(this)">😐</div><div class="mood-opt" data-v="good" onclick="pickMood(this)">🙂</div><div class="mood-opt" data-v="great" onclick="pickMood(this)">😄</div></div></div>
-      <div class="ci-question"><div class="ci-q">💪 Sport?</div><div class="ci-opts"><div class="ci-opt" data-g="sport" data-v="none" onclick="pickOpt(this)">Keinen</div><div class="ci-opt" data-g="sport" data-v="little" onclick="pickOpt(this)">Bisschen</div><div class="ci-opt" data-g="sport" data-v="much" onclick="pickOpt(this)">Richtig viel 🔥</div></div></div>
+      
       <div class="ci-question"><div class="ci-q">💧 Genug getrunken?</div><div class="ci-opts"><div class="ci-opt" data-g="water" data-v="no" onclick="pickOpt(this)">Kaum</div><div class="ci-opt" data-g="water" data-v="ok" onclick="pickOpt(this)">Geht so</div><div class="ci-opt" data-g="water" data-v="yes" onclick="pickOpt(this)">Ja!</div></div></div>
-      <div class="ci-question"><div class="ci-q">🎨 Kreatives gemacht?</div><div class="ci-opts"><div class="ci-opt" data-g="creative" data-v="no" onclick="pickOpt(this)">Nein</div><div class="ci-opt" data-g="creative" data-v="yes" onclick="pickOpt(this)">Ja 🎉</div></div></div>
+      
       <button class="ci-submit" onclick="submitCheckin()">Abschließen (+50 XP) ✓</button>
     </div>
     <div class="ci-done" id="ciDone"><div class="ci-done-emoji">🦦✨</div><div class="ci-done-title">Otto ist stolz auf dich!</div><div class="ci-done-sub">Check-in für heute erledigt. Schlaf gut!</div></div>
@@ -613,17 +634,25 @@ function nav(name, btn){
 function updateHeader(){
   document.getElementById('topName').textContent=(S.name||'Jonas')+' 👋';
   document.getElementById('topDate').textContent=new Date().toLocaleDateString('de-DE',{weekday:'short',day:'numeric',month:'short'});
-  const xp=todayXP(), goal=S.goal||500;
-  document.getElementById('xpFill').style.width=Math.min(100,Math.round(xp/goal*100))+'%';
-  document.getElementById('xpLabel').textContent=xp+' XP heute';
+  const xp=todayXP();
+  // Bar = tasks done / total tasks (not XP goal)
+  const total=S.tasks.length;
+  const done=S.tasks.filter(t=>t.doneOn===todayKey()).length;
+  const pct=total>0?Math.round(done/total*100):0;
+  document.getElementById('xpFill').style.width=pct+'%';
+  document.getElementById('xpLabel').textContent=xp+' XP — '+done+'/'+total+' erledigt';
+  if(S.streak>0) document.getElementById('streakDisplay').textContent=S.streak+' Tage 🔥';
+  else document.getElementById('streakDisplay').textContent='';
   updateOttoMood();
 }
 
 // ── OTTO MOOD ──
 function updateOttoMood(){
-  const xp=todayXP(), goal=S.goal||500, ratio=xp/goal;
+  const total=S.tasks.length;
+  const done=S.tasks.filter(t=>t.doneOn===todayKey()).length;
+  const ratio=total>0?done/total:0;
   const moods=['😴','🙂','😊','😄','🤩'];
-  const idx=ratio<.1?0:ratio<.3?1:ratio<.6?2:ratio<.9?3:4;
+  const idx=ratio===0?0:ratio<.3?1:ratio<.6?2:ratio<1?3:4;
   document.getElementById('ottoMood').textContent=moods[idx];
 }
 
@@ -716,6 +745,14 @@ function toggleTask(id,e){
     if(t.xp>=200) setTimeout(()=>{showAch('💪','Heldenmut!','Unangenehme Aufgabe erledigt! 🦦');playSound('levelup');},700);
     else if(todayDone()%5===0&&todayDone()>0) setTimeout(()=>{showAch('🎯',todayDone()+' erledigt!','Du bist im Flow!');playSound('confetti');},700);
     if(Math.random()<0.18) setTimeout(()=>{showAch('🦦','Otter-Bonus!','Otto schenkt dir extra Motivation!');playSound('confetti');},1500);
+    // Milestone badges
+    const totalDone = todayDone();
+    const milestones = {3:'🥉 Erste 3!', 5:'🥈 Fünf Pack!', 10:'🥇 Zehn! Bist du ok?!'};
+    if(milestones[totalDone]) setTimeout(()=>{showAch('🏅','Meilenstein!',milestones[totalDone]);playSound('levelup');},1200);
+    // All done?
+    if(S.tasks.filter(x=>x.doneOn!==todayKey()).length===0 && S.tasks.length>0){
+      setTimeout(()=>{showAch('🦦','ALLES ERLEDIGT!','Otto dreht komplett durch!!! 🎉');confetti();confetti();playSound('levelup');},900);
+    }
   } else {
     t.doneOn='';
     removeTodayXP(t.xp);
@@ -797,8 +834,13 @@ function pickOpt(el){document.querySelectorAll(`.ci-opt[data-g="${el.dataset.g}"
 function submitCheckin(){
   if(S.checkinDay===todayKey()){showToast('Heute schon erledigt 🌙');return;}
   S.checkinDay=todayKey();
+  const note=document.getElementById('ciNote')?.value?.trim()||'';
+  const k=todayKey();
+  if(!S.days[k]) S.days[k]={xp:0,done:0,tasks:[]};
+  S.days[k].mood=ciMood;
+  S.days[k].water=ciData.water||'';
+  if(note) S.days[k].note=note;
   addTodayXP(50,'easy');
-  if(ciData.sport==='much') S.habits.sportDays=(S.habits.sportDays||0)+1;
   save();updateHeader();
   document.getElementById('ciForm').style.display='none';
   document.getElementById('ciDone').style.display='block';
@@ -947,4 +989,9 @@ setTimeout(()=>{
 setInterval(()=>renderTasks(), 30*60*1000);
 </script>
 </body>
-</html>
+</html>      <div id="ciForm">
+        <div class="ci-question"><div class="ci-q">😊 Wie war deine Stimmung heute?</div><div class="mood-row"><div class="mood-opt" data-v="terrible" onclick="pickMood(this)">😫</div><div class="mood-opt" data-v="bad" onclick="pickMood(this)">😕</div><div class="mood-opt" data-v="ok" onclick="pickMood(this)">😐</div><div class="mood-opt" data-v="good" onclick="pickMood(this)">🙂</div><div class="mood-opt" data-v="great" onclick="pickMood(this)">😄</div></div></div>
+        <div class="ci-question"><div class="ci-q">💧 Genug getrunken?</div><div class="ci-opts"><div class="ci-opt" data-g="water" data-v="no" onclick="pickOpt(this)">Kaum</div><div class="ci-opt" data-g="water" data-v="ok" onclick="pickOpt(this)">Geht so</div><div class="ci-opt" data-g="water" data-v="yes" onclick="pickOpt(this)">Ja!</div></div></div>
+        <div class="ci-question"><div class="ci-q">💬 Was war heute besonders?</div><textarea id="ciNote" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:14px;font-family:var(--font2);color:var(--text);background:var(--bg);outline:none;resize:none;height:72px" placeholder="Optional — Otto merkt sich das für den Tagesabschluss"></textarea></div>
+        <button class="ci-submit" onclick="submitCheckin()">Abschließen (+50 XP) ✓</button>
+      </div>
