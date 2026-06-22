@@ -179,23 +179,6 @@ html,body{height:100%;background:var(--bg);font-family:var(--font);color:var(--t
 .mini-stat-lbl{font-size:10px;color:var(--text2);font-family:var(--font2);font-weight:600}
 .hist-item{background:var(--card);border:1px solid var(--border);border-radius:var(--r-sm);padding:11px 13px;margin-bottom:8px}
 
-/* CHECK-IN */
-.ci-scroll{flex:1;overflow-y:auto;padding:18px 15px}
-.ci-title{font-size:20px;font-weight:800;margin-bottom:4px}
-.ci-sub{font-size:13px;color:var(--text2);font-family:var(--font2);margin-bottom:20px}
-.ci-q{font-size:15px;font-weight:700;margin-bottom:10px}
-.ci-question{margin-bottom:20px}
-.ci-opts{display:flex;gap:8px;flex-wrap:wrap}
-.ci-opt{padding:8px 14px;border-radius:20px;border:2px solid var(--border);background:var(--card);font-size:14px;font-weight:700;cursor:pointer;transition:all .15s;font-family:var(--font);color:var(--text2)}
-.ci-opt.sel{background:var(--blue);border-color:var(--blue);color:white}
-.mood-row{display:flex;gap:10px}
-.mood-opt{font-size:28px;cursor:pointer;padding:6px;border-radius:12px;border:2px solid transparent;transition:all .15s}
-.mood-opt.sel{background:var(--blue-xl);border-color:var(--blue)}
-.ci-submit{width:100%;padding:13px;background:linear-gradient(135deg,#5B9BD5,#2E6FA3);border:none;border-radius:var(--r-sm);color:white;font-size:15px;font-weight:800;font-family:var(--font);cursor:pointer;margin-top:6px}
-.ci-done{background:var(--teal-xl);border-radius:var(--r);padding:24px;text-align:center;display:none}
-.ci-done-emoji{font-size:44px;margin-bottom:8px}
-.ci-done-title{font-size:17px;font-weight:800;color:var(--teal)}
-.ci-done-sub{font-size:13px;color:var(--teal);font-family:var(--font2);margin-top:4px}
 
 /* RECAP */
 .recap-scroll{flex:1;overflow-y:auto;padding:18px 15px}
@@ -374,7 +357,6 @@ html,body{height:100%;background:var(--bg);font-family:var(--font);color:var(--t
   <nav class="nav-bar">
     <button class="nav-btn on" onclick="nav('tasks',this)"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Aufgaben</button>
     <button class="nav-btn" onclick="nav('score',this)"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Score</button>
-    <button class="nav-btn" onclick="nav('checkin',this)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Check-in</button>
     <button class="nav-btn" onclick="nav('recap',this)"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Abschluss</button>
     <button class="nav-btn" onclick="nav('settings',this)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l-.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Einstellung</button>
   </nav>
@@ -404,35 +386,12 @@ html,body{height:100%;background:var(--bg);font-family:var(--font);color:var(--t
   <nav class="nav-bar">
     <button class="nav-btn" onclick="nav('tasks',this)"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Aufgaben</button>
     <button class="nav-btn on" onclick="nav('score',this)"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Score</button>
-    <button class="nav-btn" onclick="nav('checkin',this)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Check-in</button>
     <button class="nav-btn" onclick="nav('recap',this)"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Abschluss</button>
     <button class="nav-btn" onclick="nav('settings',this)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l-.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Einstellung</button>
   </nav>
 </div>
 
 <!-- SCREEN: CHECKIN -->
-<div class="screen" id="screen-checkin">
-  <div class="ci-scroll">
-    <div class="ci-title">Abend-Check-in 🌙</div>
-    <div class="ci-sub">Wie war dein Tag, Jonas?</div>
-    <div id="ciForm">
-      <div class="ci-question"><div class="ci-q">😊 Stimmung?</div><div class="mood-row"><div class="mood-opt" data-v="terrible" onclick="pickMood(this)">😫</div><div class="mood-opt" data-v="bad" onclick="pickMood(this)">😕</div><div class="mood-opt" data-v="ok" onclick="pickMood(this)">😐</div><div class="mood-opt" data-v="good" onclick="pickMood(this)">🙂</div><div class="mood-opt" data-v="great" onclick="pickMood(this)">😄</div></div></div>
-      
-      <div class="ci-question"><div class="ci-q">💧 Genug getrunken?</div><div class="ci-opts"><div class="ci-opt" data-g="water" data-v="no" onclick="pickOpt(this)">Kaum</div><div class="ci-opt" data-g="water" data-v="ok" onclick="pickOpt(this)">Geht so</div><div class="ci-opt" data-g="water" data-v="yes" onclick="pickOpt(this)">Ja!</div></div></div>
-      
-      <button class="ci-submit" onclick="submitCheckin()">Abschließen (+50 XP) ✓</button>
-    </div>
-    <div class="ci-done" id="ciDone"><div class="ci-done-emoji">🦦✨</div><div class="ci-done-title">Otto ist stolz auf dich!</div><div class="ci-done-sub">Check-in für heute erledigt. Schlaf gut!</div></div>
-  </div>
-  <nav class="nav-bar">
-    <button class="nav-btn" onclick="nav('tasks',this)"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Aufgaben</button>
-    <button class="nav-btn" onclick="nav('score',this)"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Score</button>
-    <button class="nav-btn on" onclick="nav('checkin',this)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Check-in</button>
-    <button class="nav-btn" onclick="nav('recap',this)"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Abschluss</button>
-    <button class="nav-btn" onclick="nav('settings',this)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l-.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Einstellung</button>
-  </nav>
-</div>
-
 <!-- SCREEN: RECAP -->
 <div class="screen" id="screen-recap">
   <div class="recap-scroll">
@@ -448,7 +407,6 @@ html,body{height:100%;background:var(--bg);font-family:var(--font);color:var(--t
   <nav class="nav-bar">
     <button class="nav-btn" onclick="nav('tasks',this)"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Aufgaben</button>
     <button class="nav-btn" onclick="nav('score',this)"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Score</button>
-    <button class="nav-btn" onclick="nav('checkin',this)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Check-in</button>
     <button class="nav-btn on" onclick="nav('recap',this)"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Abschluss</button>
     <button class="nav-btn" onclick="nav('settings',this)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l-.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Einstellung</button>
   </nav>
@@ -491,7 +449,6 @@ html,body{height:100%;background:var(--bg);font-family:var(--font);color:var(--t
   <nav class="nav-bar">
     <button class="nav-btn" onclick="nav('tasks',this)"><svg viewBox="0 0 24 24"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>Aufgaben</button>
     <button class="nav-btn" onclick="nav('score',this)"><svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Score</button>
-    <button class="nav-btn" onclick="nav('checkin',this)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>Check-in</button>
     <button class="nav-btn" onclick="nav('recap',this)"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>Abschluss</button>
     <button class="nav-btn on" onclick="nav('settings',this)"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l-.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Einstellung</button>
   </nav>
@@ -588,7 +545,7 @@ const DEFAULTS = {
     {id:3,title:'Keller aufräumen',          diff:'medium',xp:75, repeat:'once',doneOn:'',created:Date.now()},
     {id:4,title:'10 Min Spaziergang',        diff:'easy',  xp:15, repeat:'daily',doneOn:'',created:Date.now()},
   ],
-  checkinDay:''
+  checkinDay:'' // kept for backward compat with existing saves
 };
 
 let S = (() => {
@@ -884,25 +841,6 @@ function renderScore(){
   }).join('');
 }
 
-// ── CHECK-IN ──
-let ciMood='',ciData={};
-function pickMood(el){document.querySelectorAll('.mood-opt').forEach(x=>x.classList.remove('sel'));el.classList.add('sel');ciMood=el.dataset.v;}
-function pickOpt(el){document.querySelectorAll(`.ci-opt[data-g="${el.dataset.g}"]`).forEach(x=>x.classList.remove('sel'));el.classList.add('sel');ciData[el.dataset.g]=el.dataset.v;}
-function submitCheckin(){
-  if(S.checkinDay===todayKey()){showToast('Heute schon erledigt 🌙');return;}
-  S.checkinDay=todayKey();
-  const note=document.getElementById('ciNote')?.value?.trim()||'';
-  const k=todayKey();
-  if(!S.days[k]) S.days[k]={xp:0,done:0,tasks:[]};
-  S.days[k].mood=ciMood;
-  S.days[k].water=ciData.water||'';
-  if(note) S.days[k].note=note;
-  addTodayXP(50,'easy');
-  save();updateHeader();
-  document.getElementById('ciForm').style.display='none';
-  document.getElementById('ciDone').style.display='block';
-  confetti();playSound('done_medium');showAch('🌙','Check-in gemacht!','+50 XP für dich!');
-}
 
 // ── RECAP ──
 async function generateRecap(){
@@ -930,9 +868,9 @@ async function generateRecap(){
 
   // Build habit context for Claude
   const h=S.habits||{};
-  const habitCtx=`Gewohnheiten von ${name}: Liebt Morgenaufgaben (${h.morningTask||0}x), erledigt unangenehme Aufgaben ${h.hardTasksTotal||0}x, aktueller Streak ${S.streak} Tage, längster Streak ${h.longestStreak||0} Tage, Sport-Tage im Check-in ${h.sportDays||0}.`;
+  const habitCtx=`Gewohnheiten von ${name}: Liebt Morgenaufgaben (${h.morningTask||0}x), erledigt unangenehme Aufgaben ${h.hardTasksTotal||0}x, aktueller Streak ${S.streak} Tage, längster Streak ${h.longestStreak||0} Tage, Sport-Tage ${h.sportDays||0}.`;
 
-  const doneDesc=doneTasks.map(t=>`"${t.title}" (${t.diff==='hard'?'unangenehm — sehr mutig':t.diff==='medium'?'mittelschwer':'leicht'})`).join(', ')||'nichts, aber Check-in gemacht';
+  const doneDesc=doneTasks.map(t=>`"${t.title}" (${t.diff==='hard'?'unangenehm — sehr mutig':t.diff==='medium'?'mittelschwer':'leicht'})`).join(', ')||'nichts erledigt';
   const prompt=`Du bist Otto, ein frecher, liebevoller Otter in einer Prokrastinations-App. Du kennst ${name} gut.
 ${habitCtx}
 Heute erledigt: ${doneDesc}. Gesamt: ${xp} XP. Stimmung: ${ciMood||'unbekannt'}.
@@ -1058,7 +996,6 @@ dailyReset();
 updateHeader();
 renderTasks();
 loadSettings();
-if(S.checkinDay===todayKey()){document.getElementById('ciForm').style.display='none';document.getElementById('ciDone').style.display='block';}
 
 // Tageszeit-Gruss
 setTimeout(()=>{
@@ -1068,7 +1005,7 @@ setTimeout(()=>{
     `Guten Morgen, ${name}! Otto war schon beim Fischen. Was machst du als Erstes? ☀️`,
     `Hey ${name}, schön dass du vorbeischaust. Mittagstief? Ein kleines Häkchen hilft. 🦦`,
     `${name}! Nachmittag ist Ottos Lieblingszeit. Ein paar Aufgaben noch? 🎯`,
-    `Guten Abend, ${name}. Vergiss den Check-in nicht — Otto wartet schon. 🌙`,
+    `Guten Abend, ${name}. Wie war dein Tag? Otto hört zu. 🌙`,
   ];
   setOtto(greetings[h<11?0:h<14?1:h<18?2:3]);
 },1500);
@@ -1077,9 +1014,4 @@ setTimeout(()=>{
 setInterval(()=>renderTasks(), 30*60*1000);
 </script>
 </body>
-</html>      <div id="ciForm">
-        <div class="ci-question"><div class="ci-q">😊 Wie war deine Stimmung heute?</div><div class="mood-row"><div class="mood-opt" data-v="terrible" onclick="pickMood(this)">😫</div><div class="mood-opt" data-v="bad" onclick="pickMood(this)">😕</div><div class="mood-opt" data-v="ok" onclick="pickMood(this)">😐</div><div class="mood-opt" data-v="good" onclick="pickMood(this)">🙂</div><div class="mood-opt" data-v="great" onclick="pickMood(this)">😄</div></div></div>
-        <div class="ci-question"><div class="ci-q">💧 Genug getrunken?</div><div class="ci-opts"><div class="ci-opt" data-g="water" data-v="no" onclick="pickOpt(this)">Kaum</div><div class="ci-opt" data-g="water" data-v="ok" onclick="pickOpt(this)">Geht so</div><div class="ci-opt" data-g="water" data-v="yes" onclick="pickOpt(this)">Ja!</div></div></div>
-        <div class="ci-question"><div class="ci-q">💬 Was war heute besonders?</div><textarea id="ciNote" style="width:100%;padding:10px 12px;border:1.5px solid var(--border);border-radius:var(--r-sm);font-size:14px;font-family:var(--font2);color:var(--text);background:var(--bg);outline:none;resize:none;height:72px" placeholder="Optional — Otto merkt sich das für den Tagesabschluss"></textarea></div>
-        <button class="ci-submit" onclick="submitCheckin()">Abschließen (+50 XP) ✓</button>
-      </div>
+</html>
